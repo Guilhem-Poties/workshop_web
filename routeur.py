@@ -24,7 +24,18 @@ def index():
 """ @app.route("/")
 def index():
     return render_template('liste.html', listeJeux = listeJeux)
-    """ 
+""" 
+@app.route("/saisie", methods=['POST'])
+def new(): 
+    name = request.json['name']
+    # On vérifie d'abord si ce n'est pas déjà présent
+    for joueur in liste_joueur.values():
+        if jeu['name'] == name:
+            return jsonify(absences),409
+    # OK on ajoute
+    global cpt
+    cpt=cpt+1 
+    listeJeux[cpt]={'name':name, 'price':request.json['price'], 'description':request.json['description']}
 
 """ @app.route("/saisie", methods=['POST'])
 def new():

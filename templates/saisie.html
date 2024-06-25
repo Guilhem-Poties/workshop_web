@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Liste</title>
 </head>
+
 <body>
     <p>Découvre Quizoo le nouveau Quiz qui va te rendre incollable sur les animaux !</p>
     <h1>CONNEXION</h1>
@@ -45,19 +47,29 @@
 </body>
 <script>
     async function create() {
-	   const name = document.getElementById('name');
-       const price = document.getElementById('price');
-       const description = document.getElementById('description');
-	   const response = await fetch("/saisie",
-			{ method: 'POST',
-			  headers: {'Accept': 'application/json, text/plain, */*',
-    				    'Content-Type': 'application/json'
-  			  },
-			  body: JSON.stringify({'nom':name.value, 'price':price.value, 'description':description.value})
-			});
-    	name.value='';
-    	price.value='';
-    	description.value='';
-	}
+        const name = document.getElementById('name');
+        const prenom = document.getElementById('prenom');
+        const email = document.getElementById('email');
+        const date_de_naissance = document.getElementById('date_de_naissance');
+        const mot_de_passe = document.getElementById('mot_de_passe');
+        const response = await fetch("/saisie", {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                'nom': name.value,
+                'prenom': prenom.value,
+                'email': email.value,
+                'date_de_naissance': date_de_naissance.value,
+                'mot_de_passe': mot_de_passe.value
+            })
+        });
+        name.value = '';
+        price.value = '';
+        description.value = '';
+    }
 </script>
+
 </html>
