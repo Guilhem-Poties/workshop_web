@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from flask import Flask,request,render_template,jsonify,abort
 from flask_cors import CORS
+from flask_restful import Api, Resource 
 
 #from flaskmysqldb import MySQL
 import model
@@ -15,7 +16,22 @@ import model
 #from modele import fonction1, fonction2
  
 app = Flask(__name__)
+api = Api(app)
 CORS(app)
+
+todos = {}
+
+class ToDoSimple(Resource):
+    def get(self, todo_id):
+        return {todo_id: todos[todo_id]}
+    def put(self, todo_id):
+        todos [todo_id] = request.form["data"]
+        return {todo_id: todos[todo_id]}
+
+api.add_resource(ToDoSimple, '/<string:todo_id>')
+
+if __name__ == '__main__':
+    app.run(debug=True)
  
 # app.config['MYSQL_HOST'] = 'localhost'
 # app.config['MYSQL_USER'] = 'root'
@@ -35,9 +51,19 @@ liste_question={}
 def saisie():
     return render_template('index.html')
 
-@app.route("/index")
+@app.route("/index", methods=['POST', 'GET'])
 def index():
-    return render_template('index.html')
+    if request.method == 'GET':
+        return render_template('index.html')
+
+    if request.method == 'POST':
+        nom = request.form['nom']
+        prenom = request.form['prenom']
+        email = request.form['email']
+        date_naissance = request.form['date_de_naissance']
+        mdp = request.form['mdp']
+        model.insert_user(nom, prenom, email, date_naissance, mdp)
+        return "User inserted successfully!"
 
 
 # @app.route('/login', methods = ['POST', 'GET'])
