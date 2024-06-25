@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from flask import Flask,request,render_template,jsonify,abort
 from flask_cors import CORS
+import model
 
 ############# si modele.py est dans une autre dossier de routeur.py
 # import sys
