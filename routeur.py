@@ -37,7 +37,7 @@ def new():
 
 @app.route("/liste", methods=['GET'])
 def show():
-    return jsonify(listeJeux);
+    return jsonify(listeJeux)
 
 @app.route("/absence/<int:id>", methods=[ 'PUT', 'DELETE'])
 def abs(id):
@@ -54,7 +54,7 @@ def abs(id):
         else:
             abort(404)
     	# et au final on retourne tout le json    
-    return jsonify(absences);
+    return jsonify(absences)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)
