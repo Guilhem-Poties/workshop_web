@@ -3,12 +3,14 @@ from flask import Flask
 import mysql.connector
 
 mydb = mysql.connector.connect(
+    port=8889,
     host="localhost",
     user="root",
-    password="",
+    password="root",
     database="quizoo"
 )
 
 mycursor = mydb.cursor()
-
-mycursor.execute
+mycursor.execute("SELECT * FROM question")
+allQuestions = mycursor.fetchall()
+print(allQuestions)
