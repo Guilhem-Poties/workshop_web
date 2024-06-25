@@ -1,8 +1,9 @@
-# from flask import Flask, request
-
-# import mysql.connector
-# #moi
-# from flask_mysqldb import MySQL
+from flask import Flask, render_template, request
+from flask_restful import Api, Resource 
+#moi
+from flask_mysqldb import MySQL
+import mysql.connector
+from mysql.connector import Error
 
 # ############# si routeur.py est dans une autre dossier de modele.py
 # # import sys
@@ -12,14 +13,42 @@
 # import routeur
 # #importer une foncion qui est dans le fichier routeur
 # from routeur import fonction1, fonction2
+ 
+app = Flask(__name__)
+api = Api(app)
 
-# mydb = mysql.connector.connect(
-#     port=8889,
-#     host="localhost",
-#     user="root",
-#     password="root",
-#     database="quizoo"
+todos = {}
+
+class ToDoSimple(Resource):
+    def get(self, todo_id):
+        return {todo_id: todos[todo_id]}
+    def put(self, todo_id):
+        todos [todo_id] = request.form["data"]
+        return {todo_id: todos[todo_id]}
+ 
+app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_PASSWORD'] = ''
+app.config['MYSQL_DB'] = 'quizoo'
+ 
+mysql = MySQL(app)
+
+cursor = mysql.connection.cursor()
+
+
+cursor.execute(''' INSERT INTO utilisateur (nom, prenom, mail, date_naissance, mdp) VALUES(moi, pastoi, lala@lalou.com, 17/12/2003, password) ''')
+
+# mydn = mysql.connect(
+#     host = 'localhost',
+#     user = 'root',
+#     password = '',
+#     database = 'quizoo'
 # )
+
+api.add_resource(ToDoSimple, '/<string:todo_id>')
+
+if __name__ == '__main__':
+    app.run(debug=True)
 
 # @app.route("/index", methods = ['POST', 'GET'])
 # def index():
