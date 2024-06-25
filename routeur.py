@@ -2,6 +2,16 @@
 from flask import Flask,request,render_template,jsonify,abort
 from flask_cors import CORS
 
+############# si modele.py est dans une autre dossier de routeur.py
+# import sys
+# sys.path.append('../lol/modele')
+############
+#lié notre fichier actuel : routeur.cpp avec modele.cpp
+import modele
+#importer une foncion qui est dans le fichier modele
+from modele import fonction1, fonction2
+
+
 app = Flask(__name__)
 CORS(app)
 
@@ -25,6 +35,21 @@ def index():
 def index():
     return render_template('liste.html', listeJeux = listeJeux)
 """ 
+
+# @app.route('/login', methods = ['POST', 'GET'])
+# def login():
+#     if request.method == 'GET':
+#         return "Login via the login Form"
+     
+#     if request.method == 'POST':
+#         name = request.form['name']
+#         age = request.form['age']
+#         cursor = mysql.connection.cursor()
+#         cursor.execute(''' INSERT INTO info_table VALUES(%s,%s)''',(name,age))
+#         mysql.connection.commit()
+#         cursor.close()
+#         return f"Done!!"
+
 @app.route("/saisie", methods=['POST'])
 def new(): 
     nom = request.json['nom']
@@ -33,9 +58,10 @@ def new():
         if joueur['nom'] == nom:
             return "Account already existing",409
     # OK on ajoute
-    global compte
-    compte=compte+1 
-    liste_joueurs[compte]={'nom':name, 'prenom':request.json['prenom'],'email':request.json['email'], 'date_de_naissance':request.json['date_de_naissance'],'mot_de_passe':request.json['mot_de_passe'],}
+        else :
+            global compte
+            compte=compte+1 
+            liste_joueurs[compte]={'nom':name, 'prenom':request.json['prenom'],'email':request.json['email'], 'date_de_naissance':request.json['date_de_naissance'],'mot_de_passe':request.json['mot_de_passe'],}
 
 """ @app.route("/saisie", methods=['POST'])
 def new():

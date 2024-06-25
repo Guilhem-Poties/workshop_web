@@ -2,6 +2,15 @@ from flask import Flask
 
 import mysql.connector
 
+############# si routeur.py est dans une autre dossier de modele.py
+# import sys
+# sys.path.append('../lol/routeur')
+############
+#lié notre fichier actuel : modele.cpp avec routeur.cpp
+import routeur
+#importer une foncion qui est dans le fichier routeur
+from routeur import fonction1, fonction2
+
 mydb = mysql.connector.connect(
     port=8889,
     host="localhost",
