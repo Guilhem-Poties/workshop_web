@@ -27,15 +27,15 @@ def index():
 """ 
 @app.route("/saisie", methods=['POST'])
 def new(): 
-    name = request.json['name']
+    nom = request.json['nom']
     # On vérifie d'abord si ce n'est pas déjà présent
-    for joueur in liste_joueur.values():
-        if jeu['name'] == name:
-            return jsonify(absences),409
+    for joueur in liste_joueurs.values():
+        if joueur['nom'] == nom:
+            return "Account already existing",409
     # OK on ajoute
-    global cpt
-    cpt=cpt+1 
-    listeJeux[cpt]={'name':name, 'price':request.json['price'], 'description':request.json['description']}
+    global compte
+    compte=compte+1 
+    liste_joueurs[compte]={'nom':name, 'prenom':request.json['prenom'],'email':request.json['email'], 'date_de_naissance':request.json['date_de_naissance'],'mot_de_passe':request.json['mot_de_passe'],}
 
 """ @app.route("/saisie", methods=['POST'])
 def new():
