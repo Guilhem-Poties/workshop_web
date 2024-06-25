@@ -12,16 +12,19 @@ liste_themes={}
 progression_globale=0
 liste_question={}
 
-
 @app.route("/")
-def index():
-    return render_template('liste.html', listeJeux = listeJeux)
-    
-
-@app.route("/saisie")
 def saisie():
     return render_template('saisie.html')
 
+@app.route("/index")
+def index():
+    return render_template('index.html')
+   
+   
+""" @app.route("/")
+def index():
+    return render_template('liste.html', listeJeux = listeJeux)
+    """ 
 
 @app.route("/saisie", methods=['POST'])
 def new():
@@ -37,7 +40,7 @@ def new():
 
 @app.route("/liste", methods=['GET'])
 def show():
-    return jsonify(listeJeux);
+    return jsonify(listeJeux)
 
 @app.route("/absence/<int:id>", methods=[ 'PUT', 'DELETE'])
 def abs(id):
@@ -54,7 +57,7 @@ def abs(id):
         else:
             abort(404)
     	# et au final on retourne tout le json    
-    return jsonify(absences);
+    return jsonify(absences)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)
