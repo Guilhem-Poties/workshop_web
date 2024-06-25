@@ -26,7 +26,7 @@ def index():
     return render_template('liste.html', listeJeux = listeJeux)
     """ 
 
-@app.route("/saisie", methods=['POST'])
+""" @app.route("/saisie", methods=['POST'])
 def new():
     name = request.json['name']
     # On vérifie d'abord si ce n'est pas déjà présent
@@ -37,10 +37,10 @@ def new():
     global cpt
     cpt=cpt+1 
     listeJeux[cpt]={'name':name, 'price':request.json['price'], 'description':request.json['description']}
-
-@app.route("/liste", methods=['GET'])
+ """
+""" @app.route("/liste", methods=['GET'])
 def show():
-    return jsonify(listeJeux)
+    return jsonify(listeJeux) """
 
 @app.route("/absence/<int:id>", methods=[ 'PUT', 'DELETE'])
 def abs(id):
