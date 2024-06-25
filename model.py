@@ -1,9 +1,6 @@
 from flask import Flask, render_template, request
-from flask_restful import Api, Resource 
 #moi
 from flask_mysqldb import MySQL
-import mysql.connector
-from mysql.connector import Error
 
 # ############# si routeur.py est dans une autre dossier de modele.py
 # # import sys
@@ -13,30 +10,29 @@ from mysql.connector import Error
 # import routeur
 # #importer une foncion qui est dans le fichier routeur
 # from routeur import fonction1, fonction2
- 
+
+
 app = Flask(__name__)
-api = Api(app)
 
-todos = {}
-
-class ToDoSimple(Resource):
-    def get(self, todo_id):
-        return {todo_id: todos[todo_id]}
-    def put(self, todo_id):
-        todos [todo_id] = request.form["data"]
-        return {todo_id: todos[todo_id]}
- 
 app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_PORT'] = 3306
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = ''
 app.config['MYSQL_DB'] = 'quizoo'
- 
+
 mysql = MySQL(app)
+    
 
-cursor = mysql.connection.cursor()
-
-
-cursor.execute(''' INSERT INTO utilisateur (nom, prenom, mail, date_naissance, mdp) VALUES(moi, pastoi, lala@lalou.com, 17/12/2003, password) ''')
+def insert_user(nom, prenom, email, date_naissance, mdp):
+    cursor = mysql.connection.cursor()
+    query = '''
+    INSERT INTO utilisateur (nom, prenom, mail, date_naissance, mdp)
+    VALUES (%s, %s, %s, %s, %s)
+    '''
+    values = (nom, prenom, email, date_naissance, mdp)
+    cursor.execute(query, values)
+    mysql.connection.commit()
+    cursor.close()
 
 # mydn = mysql.connect(
 #     host = 'localhost',
@@ -44,11 +40,6 @@ cursor.execute(''' INSERT INTO utilisateur (nom, prenom, mail, date_naissance, m
 #     password = '',
 #     database = 'quizoo'
 # )
-
-api.add_resource(ToDoSimple, '/<string:todo_id>')
-
-if __name__ == '__main__':
-    app.run(debug=True)
 
 # @app.route("/index", methods = ['POST', 'GET'])
 # def index():
