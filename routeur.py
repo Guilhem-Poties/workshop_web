@@ -12,16 +12,19 @@ liste_themes={}
 progression_globale=0
 liste_question={}
 
-
 @app.route("/")
-def index():
-    return render_template('liste.html', listeJeux = listeJeux)
-    
-
-@app.route("/saisie")
 def saisie():
     return render_template('saisie.html')
 
+@app.route("/index")
+def index():
+    return render_template('index.html')
+   
+   
+""" @app.route("/")
+def index():
+    return render_template('liste.html', listeJeux = listeJeux)
+    """ 
 
 @app.route("/saisie", methods=['POST'])
 def new():
