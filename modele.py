@@ -1,6 +1,8 @@
 from flask import Flask
 
 import mysql.connector
+#moi
+from flask_mysqldb import MySQL
 
 ############# si routeur.py est dans une autre dossier de modele.py
 # import sys
@@ -19,10 +21,29 @@ mydb = mysql.connector.connect(
     database="quizoo"
 )
 
-mycursor = mydb.cursor()
-mycursor.execute("SELECT * FROM question")
-allQuestions = mycursor.fetchall()
-print(allQuestions)
+@app.route("/index", methods = ['POST', 'GET'])
+def index():
+    # mycursor = mydb.cursor()
+    # mycursor.execute("SELECT * FROM question")
+    # allQuestions = mycursor.fetchall()
+    # print(allQuestions)
+
+    if request.method == 'GET':
+        return render_template('session.html')
+        # return "Login via the login Form"
+     
+    
+    if request.method == 'POST':
+            name = request.form['nom']
+            age = request.form['prenom']
+            name = request.form['email']
+            age = request.form['date_de_naissance']
+            name = request.form['mot_de_passe']
+            cursor = mysql.connection.cursor()
+            cursor.execute(''' INSERT INTO USER VALUES(id,nom, prenom, mail, date_naissance, mdp)''',(name,prenom, email, date_de_naissance, mot_de_passe))
+            mysql.connection.commit()
+            cursor.close()
+            return f"Done!!"
 
 
 ##### INFOS SUR UN SITE 
