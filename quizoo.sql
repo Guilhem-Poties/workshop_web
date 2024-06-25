@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : lun. 24 juin 2024 à 16:56
--- Version du serveur : 5.7.40
+-- Généré le : mar. 25 juin 2024 à 10:29
+-- Version du serveur : 8.0.37
 -- Version de PHP : 8.0.26
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -29,14 +29,14 @@ SET time_zone = "+00:00";
 
 DROP TABLE IF EXISTS `question`;
 CREATE TABLE IF NOT EXISTS `question` (
-  `id_question` int(8) NOT NULL,
+  `id_question` int NOT NULL,
   `libelle` varchar(50) NOT NULL,
-  `id_theme` int(4) NOT NULL,
-  `id_bonne_reponse` int(10) NOT NULL,
+  `id_theme` int NOT NULL,
+  `id_bonne_reponse` int DEFAULT NULL,
   PRIMARY KEY (`id_question`),
-  KEY `id_theme` (`id_theme`),
-  KEY `id_bonne_reponse` (`id_bonne_reponse`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf16;
+  UNIQUE KEY `id_theme` (`id_theme`),
+  UNIQUE KEY `id_bonne_reponse` (`id_bonne_reponse`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf16;
 
 -- --------------------------------------------------------
 
@@ -46,12 +46,13 @@ CREATE TABLE IF NOT EXISTS `question` (
 
 DROP TABLE IF EXISTS `reponse`;
 CREATE TABLE IF NOT EXISTS `reponse` (
-  `id_reponse` int(10) NOT NULL,
+  `id` int NOT NULL,
   `libelle` varchar(50) NOT NULL,
-  `id_question` int(8) NOT NULL,
-  PRIMARY KEY (`id_reponse`),
-  KEY `id_question` (`id_question`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf16;
+  `image` varchar(100) DEFAULT NULL,
+  `id_question` int NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_question` (`id_question`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf16;
 
 -- --------------------------------------------------------
 
@@ -61,15 +62,15 @@ CREATE TABLE IF NOT EXISTS `reponse` (
 
 DROP TABLE IF EXISTS `session`;
 CREATE TABLE IF NOT EXISTS `session` (
-  `id_session` int(8) NOT NULL,
-  `date` text NOT NULL,
-  `score` int(3) NOT NULL,
-  `id_utilisateur` int(4) NOT NULL,
-  `id_theme` int(4) NOT NULL,
-  PRIMARY KEY (`id_session`),
-  UNIQUE KEY `id_user` (`id_utilisateur`),
-  KEY `id_theme` (`id_theme`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf16;
+  `id` int NOT NULL,
+  `date` date NOT NULL,
+  `score` int NOT NULL,
+  `id_user` int NOT NULL,
+  `id_theme` int NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_user` (`id_user`),
+  UNIQUE KEY `id_theme` (`id_theme`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf16;
 
 -- --------------------------------------------------------
 
@@ -79,11 +80,11 @@ CREATE TABLE IF NOT EXISTS `session` (
 
 DROP TABLE IF EXISTS `theme`;
 CREATE TABLE IF NOT EXISTS `theme` (
-  `id_session` int(4) NOT NULL,
+  `id` int NOT NULL,
   `libelle` varchar(50) NOT NULL,
   `description` varchar(500) NOT NULL,
-  PRIMARY KEY (`id_session`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf16;
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf16;
 
 -- --------------------------------------------------------
 
@@ -93,13 +94,38 @@ CREATE TABLE IF NOT EXISTS `theme` (
 
 DROP TABLE IF EXISTS `utilisateur`;
 CREATE TABLE IF NOT EXISTS `utilisateur` (
-  `id_utilisateur` int(4) NOT NULL,
+  `id` int NOT NULL,
   `nom` varchar(50) NOT NULL,
   `prenom` varchar(100) NOT NULL,
   `mail` varchar(50) NOT NULL,
   `date_naissance` date NOT NULL,
-  PRIMARY KEY (`id_utilisateur`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf16;
+  `mdp` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf16;
+
+--
+-- Contraintes pour les tables déchargées
+--
+
+--
+-- Contraintes pour la table `question`
+--
+ALTER TABLE `question`
+  ADD CONSTRAINT `question_ibfk_1` FOREIGN KEY (`id_theme`) REFERENCES `theme` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  ADD CONSTRAINT `question_ibfk_2` FOREIGN KEY (`id_bonne_reponse`) REFERENCES `reponse` (`id`) ON DELETE SET NULL ON UPDATE SET NULL;
+
+--
+-- Contraintes pour la table `reponse`
+--
+ALTER TABLE `reponse`
+  ADD CONSTRAINT `reponse_ibfk_1` FOREIGN KEY (`id_question`) REFERENCES `question` (`id_question`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `session`
+--
+ALTER TABLE `session`
+  ADD CONSTRAINT `session_ibfk_1` FOREIGN KEY (`id_theme`) REFERENCES `theme` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  ADD CONSTRAINT `session_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `utilisateur` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

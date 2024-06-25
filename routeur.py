@@ -7,8 +7,10 @@ CORS(app)
 
 #les absences, c'est pour un dictionnaire qui pour un entier donne le nom et le nombre d'absences
 # structure absences : { 1:{'nom':'toto', 'abs':3}, 2:{'nom':'bob', 'abs':3} }
-cpt=0
-listeJeux={}
+infos_utilisateur={}
+liste_themes={}
+progression_globale=0
+liste_question={}
 
 
 @app.route("/")
