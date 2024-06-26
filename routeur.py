@@ -80,8 +80,8 @@ def index():
 
 @app.route("/index", methods=['POST', 'GET'])
 def theme():
-    themes=recuperer_themes()
-    return render_template(index.html, theme_list=themes)
+    themes = model.recuperer_themes()
+    return render_template("index.html", theme_list=themes)
     
 
 # @app.route("/question", methods=['POST', 'GET'])

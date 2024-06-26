@@ -16,9 +16,10 @@ def acces_bdd():
         password="",
         database="quizoo",
     )
+    return mydb
 
 def insert_user(nom, prenom, email, date_naissance, mdp):
-    acces_bdd()
+    mydb = acces_bdd()  
     cursor = mydb.cursor()
     query = '''
     INSERT INTO utilisateur (nom, prenom, mail, date_naissance, mdp)
@@ -41,7 +42,7 @@ def insert_user(nom, prenom, email, date_naissance, mdp):
 # }
 
 def recuperer_themes():
-    acces_bdd()
+    mydb = acces_bdd()  
      # Create cursor object to execute queries
     cursor = mydb.cursor()
     
@@ -55,25 +56,27 @@ def recuperer_themes():
     libelle_theme_query = '''
     SELECT libelle FROM theme;
     '''
-     # Execute the query
+    # Execute the queries and fetch the results
     cursor.execute(nb_theme_query)
+    nb_theme_result = cursor.fetchone()[0]  # Fetch the count result
+    
     cursor.execute(id_theme_query)
+    id_theme_results = cursor.fetchall()
+    
     cursor.execute(libelle_theme_query)
-    # Fetch the count result
-    nb_theme_result = cursor.fetchone()
-    id_theme_query = cursor.fetchone()
-    libelle_theme_query = cursor.fetchone()
+    libelle_theme_results = cursor.fetchall()
     
     dict_theme= []
-    for i in range(nb_theme_query):
-        mon_theme= {"id": "id_theme_query[i]", "libelle":"libelle_theme_query[i]"}
+    for i in range(nb_theme_result):
+        mon_theme= {"id": id_theme_results[i][0], "libelle": libelle_theme_results[i][0]}
         dict_theme.append(mon_theme)
 
 
-   
+    mydb.commit()
     # Close cursor and database connection
     cursor.close()
     mydb.close()
+    print (dict_theme)
     
     # Return the count of themes
     return dict_theme
