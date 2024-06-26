@@ -19,10 +19,12 @@
     </header>
 
     {% for theme in theme_list %}
-    <div class="container">
-        <!-- RÉCUPÉRER ET AFFICHER LES THÈMES DE LA BDD + lien vers la progression ou question? -->
-        <h2>{{theme.libelle}}</h2>
-    </div>
+    <a href="question.html/{{theme.id}}">
+        <div class="container">
+            <!-- RÉCUPÉRER ET AFFICHER LES THÈMES DE LA BDD + lien vers la progression ou question? -->
+            <h2>{{theme.libelle}}</h2>
+        </div>
+    </a>
     {% endfor %}
 
 
