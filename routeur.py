@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from flask import Flask,request,render_template,jsonify,abort
 from flask_cors import CORS
-from flask_restful import Api, Resource 
+# from flask_restful import Api, Resource 
 
 #from flaskmysqldb import MySQL
 import model
@@ -16,10 +16,10 @@ import model
 #from modele import fonction1, fonction2
  
 app = Flask(__name__)
-api = Api(app)
+
 CORS(app)
 
-todos = {}
+#todos = {}
 
 # class ToDoSimple(Resource):
 #     def get(self, todo_id):
