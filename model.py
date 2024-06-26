@@ -80,18 +80,18 @@ def recuperer_themes():
 
     ##recuperer le nombre dans une variable
 
-def trouver_question():
-    acces_bdd()
-    query = '''
-    SELECT libelle FROM question WHERE id_theme == {id_theme_choisi}
-    '''
+# def trouver_question():
+#     acces_bdd()
+#     query = '''
+#     SELECT libelle FROM question WHERE id_theme == {id_theme_choisi}
+#     '''
 
 
-def trouver_bonne_reponse():
-    acces_bdd()
-    query = '''
-    SELECT libelle FROM reponse WHERE id_question == {id_question_en_cours}
-    '''
+# def trouver_bonne_reponse():
+#     acces_bdd()
+#     query = '''
+#     SELECT libelle FROM reponse WHERE id_question == {id_question_en_cours}
+#     '''
 
 
 

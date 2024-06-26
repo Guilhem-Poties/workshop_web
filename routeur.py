@@ -41,9 +41,9 @@ if __name__ == '__main__':
 # progression_globale=0
 # liste_question={}
 
-@app.route("/")
-def index():
-    return render_template('index.html')
+# @app.route("/")
+# def index():
+#     return render_template('index.html')
 
 @app.route("/connexion", methods=['POST', 'GET'])
 def index():
