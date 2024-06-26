@@ -31,15 +31,25 @@ def insert_user(nom, prenom, email, date_naissance, mdp):
             print("MySQL connection is closed")
 
 
-def trouver_theme(){
-    ##FAIRE BOUTON ACTION DANS CHAQUE THEME 
+# def trouver_theme(){
+#     ##FAIRE BOUTON ACTION DANS CHAQUE THEME 
+#     query = '''
+#     SELECT id_theme FROM theme WHERE question.id_theme == theme.id_theme 
+#     '''
+# }
+
+def trouver_question(){
     query = '''
-    SELECT * FROM question WHERE question.id_theme==theme.id_theme 
+    SELECT libelle FROM question WHERE id_theme == {id_theme_choisi}
+    '''
+}
+
+def trouver_bonne_reponse(){
+    query = '''
+    SELECT libelle FROM reponse WHERE id_question == {id_question_en_cours}
     '''
 
 }
-
-def trouver_bonne_reponse
 
 # mydn = mysql.connect(
 #     host = 'localhost',
