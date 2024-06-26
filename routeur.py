@@ -54,22 +54,32 @@ def saisie():
 @app.route("/index", methods=['POST', 'GET'])
 def index():
     if request.method == 'GET':
+        print("GET request received")
         return render_template('index.html')
-
+    
     if request.method == 'POST':
-        nom = request.form['nom']
-        prenom = request.form['prenom']
-        email = request.form['email']
-        date_naissance = request.form['date_de_naissance']
-        mdp = request.form['mdp']
-        model.insert_user(nom, prenom, email, date_naissance, mdp)
-        return "User inserted successfully!"
-
+        print("POST request received")
+        try:
+            nom = request.form['nom']
+            prenom = request.form['prenom']
+            email = request.form['email']
+            date_naissance = request.form['date_de_naissance']
+            mdp = request.form['mdp']
+            print("Received data: {nom}, {prenom}, {email}, {date_naissance}, {mdp}")
+            model.insert_user(nom, prenom, email, date_naissance, mdp)
+            print("User inserted successfully!")
+            return "User inserted successfully!"
+        except Exception as e:
+            print(f"Error: {e}")
+            return "An error occurred"
 
 # @app.route('/login', methods = ['POST', 'GET'])
 # def login():
 #     if request.method == 'GET':
 #         return "Login via the login Form"
+
+if __name__ == "__main__":
+    app.run(debug=True, host='127.0.0.1', port=5000)
      
 #     if request.method == 'POST':
 #         name = request.form['name']

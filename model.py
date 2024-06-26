@@ -11,10 +11,11 @@ import mysql.connector
 
 def insert_user(nom, prenom, email, date_naissance, mdp):
     mydb= mysql.connector.connect(
-        host="localhost",
+        host='127.0.0.1',
+        port=3306,
         user="root",
         password="root",
-        database="quizoo"
+        database="quizoo",
     )
     cursor = mydb.cursor()
     query = '''
@@ -23,8 +24,11 @@ def insert_user(nom, prenom, email, date_naissance, mdp):
     '''
     values = (nom, prenom, email, date_naissance, mdp)
     cursor.execute(query, values)
-    mysql.connection.commit()
-    cursor.close()
+    mysql.connector.commit()
+    if (mydb.is_connected()):
+            cursor.close()
+            mydb.close()
+            print("MySQL connection is closed")
 
 # mydn = mysql.connect(
 #     host = 'localhost',
