@@ -83,6 +83,30 @@ def recuperer_themes():
 
     ##recuperer le nombre dans une variable
 
+def verif_email(email):
+    mydb = acces_bdd()  
+    cursor = mydb.cursor()
+    
+    check_email_query = '''
+    SELECT mail FROM utilisateur WHERE mail = %s;
+    '''
+    cursor.execute(check_email_query, (email,))
+    check_email_result = cursor.fetchone()
+    
+    if check_email_result is None:
+        result = False  # email pas trouvé dans la BDD
+    else:
+        result = True  
+
+
+    mydb.commit()   
+    cursor.close()
+    mydb.close()
+
+    print (result)
+    return result
+
+
 # def trouver_question():
 #     acces_bdd()
 #     query = '''
