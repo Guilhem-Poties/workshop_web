@@ -5,6 +5,7 @@ from flask_cors import CORS
 
 #from flaskmysqldb import MySQL
 import model
+from model import recupere_question
 
 ############# si modele.py est dans une autre dossier de routeur.py
 # import sys
