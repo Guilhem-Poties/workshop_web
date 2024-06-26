@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from flask import Flask,request,render_template,jsonify,abort
 from flask_cors import CORS
-from flask_restful import Api, Resource 
+# from flask_restful import Api, Resource 
 
 #from flaskmysqldb import MySQL
 import model
@@ -16,19 +16,19 @@ import model
 #from modele import fonction1, fonction2
  
 app = Flask(__name__)
-api = Api(app)
+
 CORS(app)
 
-todos = {}
+#todos = {}
 
-class ToDoSimple(Resource):
-    def get(self, todo_id):
-        return {todo_id: todos[todo_id]}
-    def put(self, todo_id):
-        todos [todo_id] = request.form["data"]
-        return {todo_id: todos[todo_id]}
+# class ToDoSimple(Resource):
+#     def get(self, todo_id):
+#         return {todo_id: todos[todo_id]}
+#     def put(self, todo_id):
+#         todos [todo_id] = request.form["data"]
+#         return {todo_id: todos[todo_id]}
 
-api.add_resource(ToDoSimple, '/<string:todo_id>')
+# api.add_resource(ToDoSimple, '/<string:todo_id>')
 
 if __name__ == '__main__':
     app.run(debug=True)
@@ -54,22 +54,32 @@ def saisie():
 @app.route("/index", methods=['POST', 'GET'])
 def index():
     if request.method == 'GET':
+        print("GET request received")
         return render_template('index.html')
-
+    
     if request.method == 'POST':
-        nom = request.form['nom']
-        prenom = request.form['prenom']
-        email = request.form['email']
-        date_naissance = request.form['date_de_naissance']
-        mdp = request.form['mdp']
-        model.insert_user(nom, prenom, email, date_naissance, mdp)
-        return "User inserted successfully!"
-
+        print("POST request received")
+        try:
+            nom = request.form['nom']
+            prenom = request.form['prenom']
+            email = request.form['email']
+            date_naissance = request.form['date_de_naissance']
+            mdp = request.form['mdp']
+            print("Received data: {nom}, {prenom}, {email}, {date_naissance}, {mdp}")
+            model.insert_user(nom, prenom, email, date_naissance, mdp)
+            print("User inserted successfully!")
+            return "User inserted successfully!"
+        except Exception as e:
+            print(f"Error: {e}")
+            return "An error occurred"
 
 # @app.route('/login', methods = ['POST', 'GET'])
 # def login():
 #     if request.method == 'GET':
 #         return "Login via the login Form"
+
+if __name__ == "__main__":
+    app.run(debug=True, host='127.0.0.1', port=5000)
      
 #     if request.method == 'POST':
 #         name = request.form['name']

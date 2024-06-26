@@ -1,7 +1,4 @@
-from flask import Flask, render_template, request
-#moi
-from flask_mysqldb import MySQL
-
+import mysql.connector
 # ############# si routeur.py est dans une autre dossier de modele.py
 # # import sys
 # # sys.path.append('../lol/routeur')
@@ -12,27 +9,26 @@ from flask_mysqldb import MySQL
 # from routeur import fonction1, fonction2
 
 
-app = Flask(__name__)
-
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_PORT'] = 3306
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = ''
-app.config['MYSQL_DB'] = 'quizoo'
-
-mysql = MySQL(app)
-    
-
 def insert_user(nom, prenom, email, date_naissance, mdp):
-    cursor = mysql.connection.cursor()
+    mydb= mysql.connector.connect(
+        host='127.0.0.1',
+        port=3306,
+        user="root",
+        password="root",
+        database="quizoo",
+    )
+    cursor = mydb.cursor()
     query = '''
     INSERT INTO utilisateur (nom, prenom, mail, date_naissance, mdp)
     VALUES (%s, %s, %s, %s, %s)
     '''
     values = (nom, prenom, email, date_naissance, mdp)
     cursor.execute(query, values)
-    mysql.connection.commit()
-    cursor.close()
+    mysql.connector.commit()
+    if (mydb.is_connected()):
+            cursor.close()
+            mydb.close()
+            print("MySQL connection is closed")
 
 # mydn = mysql.connect(
 #     host = 'localhost',
