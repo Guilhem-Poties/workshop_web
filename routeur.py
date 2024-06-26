@@ -84,6 +84,14 @@ def theme():
     return render_template("index.html", theme_list=themes)
     
 
+# @app.route("/question/<theme_id>", methods=['POST', 'GET'])
+# def question():
+
+#     themes = model.recuperer_themes()
+#     return render_template("index.html", theme_list=themes)
+    
+
+
 # @app.route("/question", methods=['POST', 'GET'])
 # def question():
     
