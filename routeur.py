@@ -37,10 +37,10 @@ if __name__ == '__main__':
 
 #les absences, c'est pour un dictionnaire qui pour un entier donne le nom et le nombre d'absences
 # structure absences : { 1:{'nom':'toto', 'abs':3}, 2:{'nom':'bob', 'abs':3} }
-infos_utilisateur={}
-liste_themes={}
-progression_globale=0
-liste_question={}
+# infos_utilisateur={}
+# liste_themes={}
+# progression_globale=0
+# liste_question={}
 
 @app.route("/")
 def index():
@@ -62,11 +62,24 @@ def index():
             mdp = request.form['mdp']
             print("Received data: {nom}, {prenom}, {email}, {date_naissance}, {mdp}")
             model.insert_user(nom, prenom, email, date_naissance, mdp)
+            cursor.execute(sql_insert_query, record_to_insert)
+            connection.commit()
             print("User inserted successfully!")
             return "User inserted successfully!"
         except Exception as e:
             print(f"Error: {e}")
             return "An error occurred"
+        finally:
+            if connection.is_connected():
+                cursor.close()
+                connection.close()
+                print("MySQL connection is closed")
+
+@app.route("/connexion", methods=['POST', 'GET'])
+def index():
+
+@app.route("/question", methods=['POST', 'GET'])
+def index():
 
 # @app.route('/login', methods = ['POST', 'GET'])
 # def login():

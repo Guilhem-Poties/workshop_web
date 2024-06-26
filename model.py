@@ -14,7 +14,7 @@ def insert_user(nom, prenom, email, date_naissance, mdp):
         host='127.0.0.1',
         port=3306,
         user="root",
-        password="root",
+        password="",
         database="quizoo",
     )
     cursor = mydb.cursor()
@@ -29,6 +29,17 @@ def insert_user(nom, prenom, email, date_naissance, mdp):
             cursor.close()
             mydb.close()
             print("MySQL connection is closed")
+
+
+def trouver_theme(){
+    ##FAIRE BOUTON ACTION DANS CHAQUE THEME 
+    query = '''
+    SELECT * FROM question WHERE question.id_theme==theme.id_theme 
+    '''
+
+}
+
+def trouver_bonne_reponse
 
 # mydn = mysql.connect(
 #     host = 'localhost',
