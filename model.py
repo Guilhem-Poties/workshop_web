@@ -106,6 +106,29 @@ def verif_email(email):
     print (result)
     return result
 
+def verif_connexion(email, mot_de_passe):
+    mydb = acces_bdd()  
+    cursor = mydb.cursor()
+    
+    check_user_query = '''
+    SELECT mdp FROM utilisateur WHERE mail = %s;
+    '''
+    
+    cursor.execute(check_user_query, (email,))
+    check_user_result = cursor.fetchone()
+    
+    if check_user_result and check_user_result[0] == mot_de_passe:
+        known = True  # utilisateur connu de la BDD
+    else:
+        known = False  
+
+    mydb.commit()   
+    cursor.close()
+    mydb.close()
+
+    print (known)
+    return known
+
 
 # def trouver_question():
 #     acces_bdd()

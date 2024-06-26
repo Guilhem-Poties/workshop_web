@@ -28,40 +28,99 @@ CORS(app)
 # @app.route("/")
 # def index():
 #     return render_template('index.html')
+
+
+@app.route("/", methods=['GET'])
+def connexion_get():
+    return render_template('connexion.html')
+
+@app.route("/inscription", methods=['POST'])
+def inscription():
+    try:
+        nom = request.form['nom']
+        prenom = request.form['prenom']
+        email = request.form['email']
+        date_naissance = request.form['date_de_naissance']
+        mdp = request.form['mdp']
+
+        if model.verif_email(email):
+            return "Error: email already taken"
+
+        print(f"Received data: {nom}, {prenom}, {email}, {date_naissance}, {mdp}")
+        model.insert_user(nom, prenom, email, date_naissance, mdp)
+        print("User inserted successfully!")
+        return "User inserted successfully!"
+
+    except Exception as e:
+        print(f"Error: {e}")
+        return "An error occurred"
+
+@app.route("/connexion", methods=['POST'])
+def connexion():
+    try:
+        email = request.form['email']
+        mdp = request.form['mdp']
+
+        if not model.verif_connexion(email, mdp):
+            return "Error: user not found. Try again or register"
+
+        print("User connected successfully!")
+        return render_template('index.html')  # Add user ID if needed
+
+    except Exception as e:
+        print(f"Error: {e}")
+        return "An error occurred"
    
 
-@app.route("/connexion", methods=['POST', 'GET'])
-def inscription():
-    if request.method == 'GET':
-        print("GET request received")
-        return render_template('connexion.html')
-    
-    if request.method == 'POST':
-        print("POST request received")
-        try:
-            nom = request.form['nom']
-            prenom = request.form['prenom']
-            email = request.form['email']
-            date_naissance = request.form['date_de_naissance']
-            mdp = request.form['mdp']
-
-            if model.verif_email(email) == True:
-                return "error, email already taken"
-
-            print("Received data: {nom}, {prenom}, {email}, {date_naissance}, {mdp}")
-            model.insert_user(nom, prenom, email, date_naissance, mdp)
-            
-            print("User inserted successfully!")
-            return "User inserted successfully!"
-
-        except Exception as e:
-            print(f"Error: {e}")
-            return "An error occurred"
-    
-
 # @app.route("/connexion", methods=['POST', 'GET'])
-# def session():
-#     ##session
+# def inscription():
+#     if request.method == 'GET':
+#         print("GET request received")
+#         return render_template('connexion.html')
+    
+#     if request.method == 'POST':
+#         print("POST request received")
+#         try:
+#             nom = request.form['nom']
+#             prenom = request.form['prenom']
+#             email = request.form['email']
+#             date_naissance = request.form['date_de_naissance']
+#             mdp = request.form['mdp']
+
+#             if model.verif_email(email) == True:
+#                 return "error, email already taken"
+
+#             print("Received data: {nom}, {prenom}, {email}, {date_naissance}, {mdp}")
+#             model.insert_user(nom, prenom, email, date_naissance, mdp)
+            
+#             print("User inserted successfully!")
+#             return "User inserted successfully!"
+
+#         except Exception as e:
+#             print(f"Error: {e}")
+#             return "An error occurred"
+
+# def connexion():
+
+#     if request.method == 'POST':
+#         print("POST request received")
+#         try:
+#             email = request.form['email']
+#             mdp = request.form['mdp']
+
+#             if model.verif_connexion(email, mdp) == True:
+#                 return "error, user not found. Try again or register"
+
+#             print("User connected successfully!")
+#             return render_template('connexion.html') #IL FAUDRA AUSSI PEUT ETRE AJOUTER DANS LA PARENTHESE L'ID DU USER
+
+#         except Exception as e:
+#             print(f"Error: {e}")
+#             return "An error occurred"
+
+# # @app.route("/connexion", methods=['POST', 'GET'])
+# # def session():
+# #     ##session
 
 @app.route("/index", methods=['POST', 'GET'])
 def theme():
