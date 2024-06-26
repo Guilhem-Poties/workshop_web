@@ -24,7 +24,7 @@ def insert_user(nom, prenom, email, date_naissance, mdp):
     '''
     values = (nom, prenom, email, date_naissance, mdp)
     cursor.execute(query, values)
-    mysql.connector.commit()
+    mydb.commit()
     if (mydb.is_connected()):
             cursor.close()
             mydb.close()
