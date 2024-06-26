@@ -8,8 +8,7 @@ import mysql.connector
 # #importer une foncion qui est dans le fichier routeur
 # from routeur import fonction1, fonction2
 
-
-def insert_user(nom, prenom, email, date_naissance, mdp):
+def acces_bdd():
     mydb= mysql.connector.connect(
         host='127.0.0.1',
         port=3306,
@@ -17,6 +16,9 @@ def insert_user(nom, prenom, email, date_naissance, mdp):
         password="",
         database="quizoo",
     )
+
+def insert_user(nom, prenom, email, date_naissance, mdp):
+    acces_bdd()
     cursor = mydb.cursor()
     query = '''
     INSERT INTO utilisateur (nom, prenom, mail, date_naissance, mdp)
@@ -38,18 +40,60 @@ def insert_user(nom, prenom, email, date_naissance, mdp):
 #     '''
 # }
 
-def trouver_question(){
+def recuperer_themes():
+    acces_bdd()
+     # Create cursor object to execute queries
+    cursor = mydb.cursor()
+    
+    # Define the SQL query to count themes
+    nb_theme_query = '''
+    SELECT COUNT(id) FROM theme;
+    '''
+    id_theme_query = '''
+    SELECT id FROM theme;
+    '''
+    libelle_theme_query = '''
+    SELECT libelle FROM theme;
+    '''
+     # Execute the query
+    cursor.execute(nb_theme_query)
+    cursor.execute(id_theme_query)
+    cursor.execute(libelle_theme_query)
+    # Fetch the count result
+    nb_theme_result = cursor.fetchone()
+    id_theme_query = cursor.fetchone()
+    libelle_theme_query = cursor.fetchone()
+    
+    dict_theme= []
+    for i in range(nb_theme_query):
+        mon_theme= {"id": "id_theme_query[i]", "libelle":"libelle_theme_query[i]"}
+        dict_theme.append(mon_theme)
+
+
+   
+    # Close cursor and database connection
+    cursor.close()
+    mydb.close()
+    
+    # Return the count of themes
+    return dict_theme
+
+    ##recuperer le nombre dans une variable
+
+def trouver_question():
+    acces_bdd()
     query = '''
     SELECT libelle FROM question WHERE id_theme == {id_theme_choisi}
     '''
-}
 
-def trouver_bonne_reponse(){
+
+def trouver_bonne_reponse():
+    acces_bdd()
     query = '''
     SELECT libelle FROM reponse WHERE id_question == {id_question_en_cours}
     '''
 
-}
+
 
 # mydn = mysql.connect(
 #     host = 'localhost',

@@ -5,7 +5,6 @@ from flask_cors import CORS
 
 #from flaskmysqldb import MySQL
 import model
-from model import recupere_question
 
 ############# si modele.py est dans une autre dossier de routeur.py
 # import sys
@@ -46,7 +45,7 @@ if __name__ == '__main__':
 def index():
     return render_template('index.html')
 
-@app.route("/index", methods=['POST', 'GET'])
+@app.route("/connexion", methods=['POST', 'GET'])
 def index():
     if request.method == 'GET':
         print("GET request received")
@@ -75,11 +74,21 @@ def index():
                 connection.close()
                 print("MySQL connection is closed")
 
-@app.route("/connexion", methods=['POST', 'GET'])
-def index():
+# @app.route("/connexion", methods=['POST', 'GET'])
+# def session():
+#     ##session
 
-@app.route("/question", methods=['POST', 'GET'])
-def index():
+@app.route("/index", methods=['POST', 'GET'])
+def theme():
+    themes=recuperer_themes()
+    return render_template(index.html, theme_list=themes)
+    
+
+# @app.route("/question", methods=['POST', 'GET'])
+# def question():
+    
+
+
 
 # @app.route('/login', methods = ['POST', 'GET'])
 # def login():
