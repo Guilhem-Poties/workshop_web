@@ -34,15 +34,18 @@
 
     <script>
         var compteur_question = 0;
-        var texte_bonne_reponse = "";
+        var score = 0;
 
         window.addEventListener("load", async function (event) {
+            question_suivante();
+        });
+
+        async function load_questions() {
             const response = await fetch("/api/v1/question", { method: "GET" });
             const list_questions = await response.json();
 
-
-            question_suivante(list_questions);
-        });
+            return list_questions;
+        }
 
         async function display_question(question_actuelle) {
             document.getElementsByClassName("question-container")[0].innerHTML = ` <h2>Question `+compteur_question+`</h2> 
@@ -53,10 +56,6 @@
                 image.setAttribute("src", question_actuelle["reponses"][reponse]["image"]);
                 image.setAttribute("alt", question_actuelle["reponses"][reponse]["libelle"]);
                 image.setAttribute("onclick", `check_reponse(`+reponse+`)`)
-
-                if (question_actuelle["id_bonne reponse"] == question_actuelle["reponses"][reponse]["id"]) {
-                    texte_bonne_reponse = question_actuelle["reponses"][reponse]["libelle"];
-                }
             }
             
             var bouton = document.getElementById("bouton-suivant");
@@ -67,32 +66,59 @@
             correction.style.visibility = "hidden";
         }
 
-        async function check_reponse(reponse) {
+        function check_reponse(reponse) {
+            analyse_reponse(reponse);
+        }
+
+        async function analyse_reponse(reponse) {
+            const list_questions = await load_questions();
+            const question_actuelle = list_questions[compteur_question-1];
+
             var bouton = document.getElementById("bouton-suivant");
             var correction = document.getElementById("correction");
 
-            if (question_actuelle["reponse"][reponse]["id"] == question_actuelle["id_bonne reponse"]) {
+            if (question_actuelle["reponses"][reponse]["id"] == question_actuelle["id bonne reponse"]) {
                 var texte = `Correct ! La bonne réponse est bien `;
+                score++;
+                
             } 
             else {
                 var texte = `Faux ! La bonne réponse était `
+            }
+
+            for (const element in question_actuelle["reponses"]) {
+                document.getElementById(`reponse-`+ element).removeAttribute("onclick")
+                
+
+                if (question_actuelle["id_bonne reponse"] == question_actuelle["reponses"][element]["id"]) {
+                    var texte_bonne_reponse = question_actuelle["reponses"][element]["libelle"];
+                }
             }
 
             bouton.style.visibility = "visible";
             bouton.disabled = false;
             correction.style.visibility = "visible";
             correction.innerHTML = texte + texte_bonne_reponse;
-
-            for (const element in question_actuelle["reponse"]) {
-                document.getElementById(`reponse-`+ element).removeAttribute("onclick")
-            }
         }
 
-        async function question_suivante(list_questions) {
+        async function question_suivante() {
+            const list_questions = await load_questions();
             var question_actuelle = list_questions[compteur_question];
             compteur_question++;
             
-            display_question(question_actuelle);
+            // Vérifie si l'uilisateur est à la dernière question
+            if (compteur_question <= list_questions.lenght()) {
+                display_question(question_actuelle);        
+            }
+            else {
+                // fetch("/api/v1/question")
+
+                display_score();
+            }
+        }
+
+        function display_score() {
+            
         }
     </script>
 
