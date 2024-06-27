@@ -10,7 +10,7 @@
 <body>
     <header>
         <h1>QUIZOO</h1>
-        <a href="index.html">Quitter</a>
+        <a href="/index">Quitter</a>
         <!-- Retour à l'accueil -->
     </header>
 
@@ -36,26 +36,28 @@
         var compteur_question = 0;
         var score = 0;
 
-        window.addEventListener("load", async function (event) {
+        window.addEventListener("load", async function(event) {
             question_suivante();
         });
 
         async function load_questions() {
-            const response = await fetch("/api/v1/question", { method: "GET" });
+            const response = await fetch("/api/v1/question", {
+                method: "GET"
+            });
             const list_questions = await response.json();
 
             return list_questions;
         }
 
         async function display_question(question_actuelle) {
-            document.getElementsByClassName("question-container")[0].innerHTML = ` <h2>Question `+compteur_question+`</h2> 
-                                                                                <p>`+question_actuelle["libelle"]+`</p>`;
+            document.getElementsByClassName("question-container")[0].innerHTML = ` <h2>Question ` + compteur_question + `</h2> 
+                                                                                <p>` + question_actuelle["libelle"] + `</p>`;
 
             for (const reponse in question_actuelle["reponses"]) {
-                var image = document.getElementById(`reponse-`+ reponse);
+                var image = document.getElementById(`reponse-` + reponse);
                 image.setAttribute("src", question_actuelle["reponses"][reponse]["image"]);
                 image.setAttribute("alt", question_actuelle["reponses"][reponse]["libelle"]);
-                image.setAttribute("onclick", `check_reponse(`+reponse+`)`)
+                image.setAttribute("onclick", `check_reponse(` + reponse + `)`)
             }
 
             var bouton = document.getElementById("bouton-suivant");
@@ -72,7 +74,7 @@
 
         async function analyse_reponse(reponse) {
             const list_questions = await load_questions();
-            const question_actuelle = list_questions[compteur_question-1];
+            const question_actuelle = list_questions[compteur_question - 1];
 
             var bouton = document.getElementById("bouton-suivant");
             var correction = document.getElementById("correction");
@@ -80,15 +82,14 @@
             if (question_actuelle["reponses"][reponse]["id"] == question_actuelle["id bonne reponse"]) {
                 var texte = `Correct ! La bonne réponse est bien `;
                 score++;
-                
-            } 
-            else {
+
+            } else {
                 var texte = `Faux ! La bonne réponse était `
             }
 
             for (const element in question_actuelle["reponses"]) {
-                document.getElementById(`reponse-`+ element).removeAttribute("onclick")
-                
+                document.getElementById(`reponse-` + element).removeAttribute("onclick")
+
 
                 if (question_actuelle["id_bonne reponse"] == question_actuelle["reponses"][element]["id"]) {
                     var texte_bonne_reponse = question_actuelle["reponses"][element]["libelle"];
@@ -105,12 +106,11 @@
             const list_questions = await load_questions();
             var question_actuelle = list_questions[compteur_question];
             compteur_question++;
-            
+
             // Vérifie si l'uilisateur est à la dernière question
             if (compteur_question <= list_questions.lenght()) {
-                display_question(question_actuelle);        
-            }
-            else {
+                display_question(question_actuelle);
+            } else {
                 // fetch("/api/v1/question")
 
                 display_score();
@@ -118,7 +118,7 @@
         }
 
         function display_score() {
-            
+
         }
     </script>
 

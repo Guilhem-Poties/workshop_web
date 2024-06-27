@@ -10,14 +10,20 @@
 
 <body>
     <header>
-        <a href="index.html">Home</a>
+        <a href="/index">Home</a>
         <!-- route retour à l'index? -->
-        <a href="progression.html">Progression</a>
+        <a href="/progression">Progression</a>
         <!-- route vers progression -->
         <h1>QUIZOO</h1>
-        <a href="compte.html">Compte</a>
+        <a href="/compte">Compte</a>
         <!-- route vers compte -->
     </header>
+
+    <div class="container">
+        <!-- RÉCUPÉRER ET AFFICHER LES THÈMES DE LA BDD + lien vers la progression ou question? -->
+        <h2>Graphe de progression de cette semaine : </h2>
+    </div>
+
     <!-- On créer le graphe de progression -->
     <canvas id="lineChart" width="900" height="400"></canvas>
     <script>
@@ -51,13 +57,6 @@
         });
     </script>
 
-
-
-    <div class="container">
-        <!-- RÉCUPÉRER ET AFFICHER LES THÈMES DE LA BDD + lien vers la progression ou question? -->
-        <h2>Grpahe de progression de cette semaine : </h2>
-    </div>
-    </a>
 
 
 </body>
