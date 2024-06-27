@@ -76,7 +76,7 @@ def recuperer_themes():
 
 
 def recuperer_questions(id_theme):
-    mydb = acces_bdd()  
+    mydb = acces_bdd()
      # Create cursor object to execute queries
     cursor = mydb.cursor()
     
@@ -105,9 +105,9 @@ def recuperer_questions(id_theme):
         
         if question_id not in questions:
             questions[question_id] = {
-                'id_question': question_id,
+                'id question': question_id,
                 'libelle': question_text,
-                'id_bonne_reponse': correct_answer_id,
+                'id bonne reponse': correct_answer_id,
                 'reponses': []
             }
         

@@ -21,9 +21,9 @@
             <div class="question-container">
             </div>
             <div class="reponse-container">
-                <img id="reponse-0" src="" width="500" height="600" alt="" onclick="check_reponse(0)">
-                <img id="reponse-1" src="" width="500" height="600" alt="" onclick="check_reponse(1)">
-                <img id="reponse-2" src="" width="500" height="600" alt="" onclick="check_reponse(2)">
+                <img id="reponse-0" class="reponse" src="" width="500" height="600" alt="" onclick="check_reponse(0)">
+                <img id="reponse-1" class="reponse" src="" width="500" height="600" alt="" onclick="check_reponse(1)">
+                <img id="reponse-2" class="reponse" src="" width="500" height="600" alt="" onclick="check_reponse(2)">
             </div>
         </div>
     </div>
@@ -33,28 +33,29 @@
     </div>
 
     <script>
-        const list_questions = await fetch("/question", method="GET");
-        var question_actuelle = {};
-        var reponses = {};
         var compteur_question = 0;
         var texte_bonne_reponse = "";
 
-        window.addEventListener("load", (event) => {
-            question_suivante();
+        window.addEventListener("load", async function (event) {
+            const response = await fetch("/api/v1/question", { method: "GET" });
+            const list_questions = await response.json();
+
+
+            question_suivante(list_questions);
         });
 
-        function display_question() {
+        async function display_question(question_actuelle) {
             document.getElementsByClassName("question-container")[0].innerHTML = ` <h2>Question `+compteur_question+`</h2> 
                                                                                 <p>`+question_actuelle["libelle"]+`</p>`;
 
-            for (const reponse in reponses) {
+            for (const reponse in question_actuelle["reponses"]) {
                 var image = document.getElementById(`reponse-`+ reponse);
-                image.setAttribute("src", reponses[reponse]["image"]);
-                image.setAttribute("alt", reponses[reponse]["libelle"]);
+                image.setAttribute("src", question_actuelle["reponses"][reponse]["image"]);
+                image.setAttribute("alt", question_actuelle["reponses"][reponse]["libelle"]);
                 image.setAttribute("onclick", `check_reponse(`+reponse+`)`)
 
-                if (question_actuelle["bonne reponse"] == reponses[reponse]["id"]) {
-                    texte_bonne_reponse = reponses[reponse]["libelle"];
+                if (question_actuelle["id_bonne reponse"] == question_actuelle["reponses"][reponse]["id"]) {
+                    texte_bonne_reponse = question_actuelle["reponses"][reponse]["libelle"];
                 }
             }
             
@@ -66,11 +67,11 @@
             correction.style.visibility = "hidden";
         }
 
-        function check_reponse(reponse) {
+        async function check_reponse(reponse) {
             var bouton = document.getElementById("bouton-suivant");
             var correction = document.getElementById("correction");
 
-            if (reponses[reponse]["id"] == question_actuelle["bonne reponse"]) {
+            if (question_actuelle["reponse"][reponse]["id"] == question_actuelle["id_bonne reponse"]) {
                 var texte = `Correct ! La bonne réponse est bien `;
             } 
             else {
@@ -82,17 +83,16 @@
             correction.style.visibility = "visible";
             correction.innerHTML = texte + texte_bonne_reponse;
 
-            for (const element in reponses) {
+            for (const element in question_actuelle["reponse"]) {
                 document.getElementById(`reponse-`+ element).removeAttribute("onclick")
             }
         }
 
-        function question_suivante() {
-            question_actuelle = list_questions[compteur_question];
-            reponses = question_actuelle["reponses"];
+        async function question_suivante(list_questions) {
+            var question_actuelle = list_questions[compteur_question];
             compteur_question++;
             
-            display_question();
+            display_question(question_actuelle);
         }
     </script>
 

@@ -18,7 +18,7 @@ import model
 app = Flask(__name__)
 CORS(app)
 
-id_theme = 0
+id_theme = 0 
 
 # infos_utilisateur={}
 # liste_themes={}
