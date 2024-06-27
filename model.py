@@ -34,13 +34,6 @@ def insert_user(nom, prenom, email, date_naissance, mdp):
             print("MySQL connection is closed")
 
 
-# def trouver_theme(){
-#     ##FAIRE BOUTON ACTION DANS CHAQUE THEME 
-#     query = '''
-#     SELECT id_theme FROM theme WHERE question.id_theme == theme.id_theme 
-#     '''
-# }
-
 def recuperer_themes():
     mydb = acces_bdd()  
      # Create cursor object to execute queries
