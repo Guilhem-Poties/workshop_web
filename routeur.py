@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from flask import Flask,request,render_template,jsonify,abort
+from flask import Flask,request,render_template,jsonify,abort, session, redirect
 from flask_cors import CORS
 # from flask_restful import Api, Resource 
 
@@ -16,7 +16,7 @@ import model
 #from modele import fonction1, fonction2
  
 app = Flask(__name__)
-
+app.config["SESSION_PERMANENT"] = False
 CORS(app)
 
 id_theme = 0
@@ -29,6 +29,10 @@ id_theme = 0
 # @app.route("/")
 # def index():
 #     return render_template('index.html')
+@app.route("/logout")
+def logout():
+	session["name"] = None
+	return redirect("/")
 
 @app.route("/question/<id>", methods=['GET', 'POST'])
 def question(id):
@@ -37,6 +41,12 @@ def question(id):
     print(id)
     return render_template('question.html')
 
+@app.route("/question")
+def question():
+    if not session.get("name"):
+        # if not there in the session then redirect to the login page
+        return redirect("/connexion")
+    return render_template("question.html")
 
 @app.route("/api/v1/question", methods=['GET', 'POST'])
 def create_question():
@@ -83,6 +93,7 @@ def connexion():
             return "Error: user not found. Try again or register"
 
         print("User connected successfully!")
+        session["name"] = request.form.get("email")
         return theme()
 
     except Exception as e:
@@ -92,8 +103,10 @@ def connexion():
 
 @app.route("/index", methods=['POST', 'GET'])
 def theme():
-    ##utiliser redirect
-    themes = model.recuperer_themes() 
+    if not session.get("name"):
+        # if not there in the session then redirect to the login page
+        return redirect("/connexion")
+    themes = model.recuperer_themes()
     return render_template("index.html", theme_list=themes)
 
 

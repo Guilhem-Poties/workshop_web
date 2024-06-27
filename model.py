@@ -1,5 +1,6 @@
 from flask import jsonify
 
+
 import mysql.connector
 # ############# si routeur.py est dans une autre dossier de modele.py
 # # import sys
