@@ -65,16 +65,61 @@ def recuperer_themes():
         dict_theme.append(mon_theme)
 
 
-    mydb.commit()
-    # Close cursor and database connection
+    # on ferme le curseur et l'acces a la BDD
     cursor.close()
     mydb.close()
     print (dict_theme)
     
-    # Return the count of themes
     return dict_theme
 
-    ##recuperer le nombre dans une variable
+
+def recuperer_questions(id_theme):
+    mydb = acces_bdd()  
+     # Create cursor object to execute queries
+    cursor = mydb.cursor()
+    
+    # Define the SQL query to count themes
+    
+    infos_questions_reponses_query ='''
+    SELECT question.id_question, question.libelle, question.id_bonne_reponse, reponse.id, reponse.libelle, reponse.image 
+    FROM question JOIN reponse ON reponse.id_question = question.id_question JOIN theme ON theme.id = question.id_theme 
+    WHERE theme.id=%s ORDER BY question.id_question, reponse.id ;
+    '''
+    
+    cursor.execute(jsonify(infos_questions_reponses_query))
+    infos_questions_reponses_result = cursor.fetchall()
+
+    cursor.close()
+    mydb.close()
+
+    questions = {}
+    for row in infos_questions_reponses_result:
+        question_id = row[0]
+        question_text = row[1]
+        correct_answer_id = row[2]
+        answer_id = row[3]
+        answer_text = row[4]
+        answer_image = row[5]
+        
+        if question_id not in questions:
+            questions[question_id] = {
+                'id_question': question_id,
+                'libelle': question_text,
+                'id_bonne_reponse': correct_answer_id,
+                'reponses': []
+            }
+        
+        questions[question_id]['reponses'].append({
+            'id': answer_id,
+            'libelle': answer_text,
+            'image': answer_image
+        })
+    
+    return questions
+    
+    print (infos_questions_reponses_query)
+    
+    return infos_questions_reponses_query
 
 def verif_email(email):
     mydb = acces_bdd()  
@@ -115,7 +160,6 @@ def verif_connexion(email, mot_de_passe):
     else:
         known = False  
 
-    mydb.commit()   
     cursor.close()
     mydb.close()
 
