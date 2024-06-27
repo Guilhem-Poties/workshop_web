@@ -74,6 +74,10 @@ def index():
                 connection.close()
                 print("MySQL connection is closed")
 
+@app.route("/question")
+def question():
+    return render_template("question.html")
+
 # @app.route("/connexion", methods=['POST', 'GET'])
 # def session():
 #     ##session

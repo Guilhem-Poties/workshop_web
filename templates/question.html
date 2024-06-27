@@ -17,57 +17,118 @@
     <div class="global-container">
         <!-- RÉCUPÉRER LES QUESTIONS ET LES RÉPONSES ASSOCIÉES ET LES AFFICHER -->
 
-        <div class="question1">
-            <div class="question1-container">
-                <h2>QUESTION 1</h2>
-                <p>Combien de carottes les lapins mangent-ils par jour?</p>
+        <div class="question">
+            <div class="question-container">
             </div>
             <div class="reponse-container">
-                <button onclick=""> <!-- Rendre toutes les images cliquable et compter les points -->
-                <img src="carotte_10kg.jpg" alt="Girl in a jacket" width="500" height="600" alt="carotte 10kg">
-                </button>
-                <img src="carotte_15kg.jpg" alt="Girl in a jacket" width="500" height="600" alt="carotte 15kg">
-                <img src="carotte_20kg.jpg" alt="Girl in a jacket" width="500" height="600" alt="carotte 20kg">
-            </div>
-        </div>
-        <div class="question2">
-            <div class="question2-container">
-                <h2>QUESTION 2</h2>
-                <p>POurquoi 1+1 font 2?</p>
-            </div>
-            <div class="reponse-container">
-                <img src="ddk.jpg" alt="Girl in a jacket" width="500" height="600" alt="ddk">
-                <img src="duuu.jpg" alt="Girl in a jacket" width="500" height="600" alt="duuu">
-                <img src="diiii.jpg" alt="Girl in a jacket" width="500" height="600" alt="diiii">
-            </div>
-        </div>
-        <div class="question3">
-            <div class="question3-container">
-                <h2>QUESTION 3</h2>
-                <p>comment le loup mange la toorut?</p>
-            </div>
-            <div class="reponse-container">
-                <img src="ddk.jpg" alt="Girl in a jacket" width="500" height="600" alt="ddk">
-                <img src="duuu.jpg" alt="Girl in a jacket" width="500" height="600" alt="duuu">
-                <img src="diiii.jpg" alt="Girl in a jacket" width="500" height="600" alt="diiii">
-            </div>
-        </div>
-        <div class="question4">
-            <div class="question4-container">
-                <h2>QUESTION 4</h2>
-                <p>Pourquoi les elephant ont une trompe?</p>
-            </div>
-            <div class="reponse-container">
-                <img src="ddk.jpg" alt="Girl in a jacket" width="500" height="600" alt="ddk">
-                <img src="duuu.jpg" alt="Girl in a jacket" width="500" height="600" alt="duuu">
-                <img src="diiii.jpg" alt="Girl in a jacket" width="500" height="600" alt="diiii">
+                <img id="reponse-0" src="" width="500" height="600" alt="" onclick="check_reponse(0)">
+                <img id="reponse-1" src="" width="500" height="600" alt="" onclick="check_reponse(1)">
+                <img id="reponse-2" src="" width="500" height="600" alt="" onclick="check_reponse(2)">
             </div>
         </div>
     </div>
-    <div class="button-suivant">
-        <button type="button">SUIVANT</button>
+    <div class="correction-container">
+        <p id="correction" visibility="hidden"></p>
+        <button id="bouton-suivant" type="button" onclick="question_suivante()" style="visibility: hidden;" disabled>SUIVANT</button>
     </div>
 
+    <script>
+        const list_questions = {
+            0: {
+                "libelle": "Que produisent les vaches ?",
+                "reponses": {
+                    0: {
+                        "libelle": "Du lait",
+                        "image": "data/images/lait.png",
+                        "bonne reponse": true,
+                    },
+                    1: {
+                        "libelle": "Du fromage",
+                        "image": "data/images/fromage.png",
+                        "bonne reponse": false,
+                    },
+                    2: {
+                        "libelle": "Des oeufs",
+                        "image": "data/images/oeufs.png",
+                        "bonne reponse": false,
+                    },
+                }
+            },
+            1: {
+                "libelle": "Que produisent les moutons ?",
+                "reponses": {
+                    0: {
+                        "libelle": "Du lait",
+                        "image": "data/images/lait.png",
+                        "bonne reponse": true,
+                    },
+                    1: {
+                        "libelle": "Du fromage",
+                        "image": "data/images/fromage.png",
+                        "bonne reponse": false,
+                    },
+                    2: {
+                        "libelle": "Des oeufs",
+                        "image": "data/images/oeufs.png",
+                        "bonne reponse": false,
+                    },
+                }
+            },
+        };
+        var question_actuelle = {};
+        var reponses = {};
+        var compteur_question = 0;
+        var bonne_reponse = "";
+
+        window.addEventListener("load", (event) => {
+            question_suivante();
+        });
+
+        function display_question() {
+            document.getElementsByClassName("question-container")[0].innerHTML = ` <h2>Question `+compteur_question+`</h2> 
+                                                                                <p>`+question_actuelle["libelle"]+`</p>`;
+
+            for (const reponse in reponses) {
+                var image = document.getElementById(`reponse-`+ reponse);
+                image.setAttribute("src", reponses[reponse]["image"]);
+                image.setAttribute("alt", reponses[reponse]["libelle"]);
+                image.setAttribute("onclick", `check_reponse(`+reponse+`)`)
+                if ([reponse]["bonne reponse"]) {
+                    bonne_reponse = [reponse]["libelle"];
+                }
+            }
+        }
+
+        function check_reponse(reponse) {
+            var bouton = document.getElementById("bouton-suivant");
+            var correction = document.getElementById("correction");
+
+            if (list_questions[compteur_question-1]["reponses"][reponse]["bonne reponse"]) {
+                var texte = `Correct ! La bonne réponse est bien `;
+            } 
+            else {
+                var texte = `Faux ! La bonne réponse était `
+            }
+
+            bouton.style.visibility = "visible";
+            bouton.removeAttribute("disabled");
+            correction.style.visibility = "visible";
+            correction.innerHTML = texte + bonne_reponse;
+
+            for (const reponse in reponses) {
+                var image = document.getElementById(`reponse-`+ reponse);
+                image.removeAttribute("onclick")
+            }
+        }
+
+        function question_suivante() {
+            question_actuelle = list_questions[compteur_question];
+            reponses = question_actuelle["reponses"];
+            compteur_question++;
+            
+            display_question();
+        }
+    </script>
 
 </body>
 
