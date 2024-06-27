@@ -34,13 +34,6 @@ def insert_user(nom, prenom, email, date_naissance, mdp):
             print("MySQL connection is closed")
 
 
-# def trouver_theme(){
-#     ##FAIRE BOUTON ACTION DANS CHAQUE THEME 
-#     query = '''
-#     SELECT id_theme FROM theme WHERE question.id_theme == theme.id_theme 
-#     '''
-# }
-
 def recuperer_themes():
     mydb = acces_bdd()  
      # Create cursor object to execute queries
@@ -82,6 +75,53 @@ def recuperer_themes():
     return dict_theme
 
     ##recuperer le nombre dans une variable
+
+def verif_email(email):
+    mydb = acces_bdd()  
+    cursor = mydb.cursor()
+    
+    check_email_query = '''
+    SELECT mail FROM utilisateur WHERE mail = %s;
+    '''
+    cursor.execute(check_email_query, (email,))
+    check_email_result = cursor.fetchone()
+    
+    if check_email_result is None:
+        result = False  # email pas trouvé dans la BDD
+    else:
+        result = True  
+
+
+    mydb.commit()   
+    cursor.close()
+    mydb.close()
+
+    print (result)
+    return result
+
+def verif_connexion(email, mot_de_passe):
+    mydb = acces_bdd()  
+    cursor = mydb.cursor()
+    
+    check_user_query = '''
+    SELECT mdp FROM utilisateur WHERE mail = %s;
+    '''
+    
+    cursor.execute(check_user_query, (email,))
+    check_user_result = cursor.fetchone()
+    
+    if check_user_result and check_user_result[0] == mot_de_passe:
+        known = True  # utilisateur connu de la BDD
+    else:
+        known = False  
+
+    mydb.commit()   
+    cursor.close()
+    mydb.close()
+
+    print (known)
+    return known
+
 
 # def trouver_question():
 #     acces_bdd()
