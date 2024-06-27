@@ -16,6 +16,7 @@ import model
 #from modele import fonction1, fonction2
  
 app = Flask(__name__)
+
 CORS(app)
 
 id_theme = 0 
@@ -30,17 +31,17 @@ id_theme = 0
 #     return render_template('index.html')
 
 
-@app.route("/question")
-def question():
-    return render_template("question.html")
-
-@app.route("/api/v1/question", methods=['GET'])
+@app.route("/api/v1/question/<id>", methods=['GET'])
 def create_question():
-    return model.recuperer_questions(id_theme)
+    id_theme=id
+    quest = model.recuperer_questions(id_theme)
+    return render_template('question.html', list_questions=quest)
 
 # @app.route("/connexion", methods=['POST', 'GET'])
 # def session():
 #     ##session
+
+
 @app.route("/", methods=['GET'])
 def connexion_get():
     return render_template('connexion.html')
@@ -85,13 +86,17 @@ def connexion():
 
 @app.route("/index", methods=['POST', 'GET'])
 def theme():
-    themes = model.recuperer_themes()
+    ##utiliser redirect
+    themes = model.recuperer_themes() 
     return render_template("index.html", theme_list=themes)
-    
 
+
+@app.route("/progression",  methods=['POST', 'GET'])
+def progression():
+    liste_dates_et_scores = model.progression_semaine() 
+    return render_template("progression.html", liste_dates_scores = dates_et_scores)
 # @app.route("/question/<theme_id>", methods=['POST', 'GET'])
 # def question():
-
 #     themes = model.recuperer_themes()
 #     return render_template("index.html", theme_list=themes)
     
