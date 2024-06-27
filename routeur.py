@@ -18,7 +18,7 @@ import model
 app = Flask(__name__)
 CORS(app)
 
-id_theme = -1
+id_theme = 0
 
 # infos_utilisateur={}
 # liste_themes={}
@@ -34,8 +34,8 @@ id_theme = -1
 def question():
     return render_template("question.html")
 
-@app.route("/question", methods=['GET'])
-def question():
+@app.route("/api/v1/question", methods=['GET'])
+def create_question():
     return model.recuperer_questions(id_theme)
 
 # @app.route("/connexion", methods=['POST', 'GET'])

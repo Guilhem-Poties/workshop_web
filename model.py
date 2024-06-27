@@ -1,3 +1,5 @@
+from flask import jsonify
+
 import mysql.connector
 # ############# si routeur.py est dans une autre dossier de modele.py
 # # import sys
@@ -83,10 +85,10 @@ def recuperer_questions(id_theme):
     infos_questions_reponses_query ='''
     SELECT question.id_question, question.libelle, question.id_bonne_reponse, reponse.id, reponse.libelle, reponse.image 
     FROM question JOIN reponse ON reponse.id_question = question.id_question JOIN theme ON theme.id = question.id_theme 
-    WHERE theme.id=%s ORDER BY question.id_question, reponse.id ;
+    WHERE theme.id=%s ORDER BY question.id_question, reponse.id;
     '''
     
-    cursor.execute(jsonify(infos_questions_reponses_query))
+    cursor.execute(infos_questions_reponses_query, (id_theme,))
     infos_questions_reponses_result = cursor.fetchall()
 
     cursor.close()
@@ -115,7 +117,7 @@ def recuperer_questions(id_theme):
             'image': answer_image
         })
     
-    return questions
+    return jsonify(questions)
     
     print (infos_questions_reponses_query)
     
