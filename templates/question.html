@@ -57,20 +57,9 @@
                 image.setAttribute("alt", question_actuelle["reponses"][reponse]["libelle"]);
                 image.setAttribute("onclick", `check_reponse(`+reponse+`)`)
             }
-
-            var bouton = document.getElementById("bouton-suivant");
-            var correction = document.getElementById("correction");
-
-            bouton.style.visibility = "hidden";
-            bouton.disabled = true
-            correction.style.visibility = "hidden";
         }
 
-        function check_reponse(reponse) {
-            analyse_reponse(reponse);
-        }
-
-        async function analyse_reponse(reponse) {
+        async function check_reponse(reponse) {
             const list_questions = await load_questions();
             const question_actuelle = list_questions[compteur_question-1];
 
@@ -90,7 +79,7 @@
                 document.getElementById(`reponse-`+ element).removeAttribute("onclick")
                 
 
-                if (question_actuelle["id_bonne reponse"] == question_actuelle["reponses"][element]["id"]) {
+                if (question_actuelle["id bonne reponse"] == question_actuelle["reponses"][element]["id"]) {
                     var texte_bonne_reponse = question_actuelle["reponses"][element]["libelle"];
                 }
             }
@@ -104,21 +93,30 @@
         async function question_suivante() {
             const list_questions = await load_questions();
             var question_actuelle = list_questions[compteur_question];
-            compteur_question++;
+
+            // Cache la partie correction 
+            var bouton = document.getElementById("bouton-suivant");
+            var correction = document.getElementById("correction");
+
+            bouton.style.visibility = "hidden";
+            bouton.disabled = true
+            correction.style.visibility = "hidden";
             
             // Vérifie si l'uilisateur est à la dernière question
-            if (compteur_question <= list_questions.lenght()) {
-                display_question(question_actuelle);        
+            if (compteur_question < Object.keys(list_questions).length) {
+                compteur_question++;
+                display_question(question_actuelle);
             }
             else {
-                // fetch("/api/v1/question")
-
                 display_score();
             }
         }
 
         function display_score() {
-            
+            document.getElementsByClassName("global-container")[0].innerHTML = `<h2>Félicitation !<h1>
+                                                                                <p>Ton score est de `+score+`/`+compteur_question+` !</p>
+                                                                                <button>Retour au menu</buton>`
+                                                                                
         }
     </script>
 
