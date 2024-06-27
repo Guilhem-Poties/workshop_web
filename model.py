@@ -15,7 +15,7 @@ def acces_bdd():
         host='127.0.0.1',
         port=3306,
         user="root",
-        password="root",
+        password="",
         database="quizoo",
     )
     return mydb
@@ -35,23 +35,6 @@ def insert_user(nom, prenom, email, date_naissance, mdp):
             mydb.close()
             print("MySQL connection is closed")
 
-def progression_theme(id_theme, id_user):
-    mydb = acces_bdd()  
-     # Create cursor object to execute queries
-    cursor = mydb.cursor()
-
-    infos_session_query ='''
-    SELECT MEAN(score) FROM session WHERE id_theme = %s AND id_user = %s 
-    '''
-    cursor.execute(infos_session_query, (id_theme,), (id_user,))
-    infos_session_query_result = cursor.fetchone()[0]
-    score_pourcentage = infos_session_query_result/5*100
-
-    cursor.close()
-    mydb.close()
-
-    return score_pourcentage
-    
 
 def recuperer_themes():
     mydb = acces_bdd()  
@@ -184,6 +167,64 @@ def verif_connexion(email, mot_de_passe):
     print (known)
     return known
 
+
+def moyenne_score_theme(id_theme, id_user):
+    mydb = acces_bdd()  
+     # Create cursor object to execute queries
+    cursor = mydb.cursor()
+
+    infos_session_query ='''
+    SELECT MEAN(score) FROM session WHERE id_theme = %s AND id_user = %s 
+    '''
+    cursor.execute(infos_session_query, (id_theme,), (id_user,))
+    infos_session_query_result = cursor.fetchone()[0]
+    score_pourcentage_theme = infos_session_query_result/5*100
+
+    cursor.close()
+    mydb.close()
+
+    return score_pourcentage_theme
+    
+def moyenne_score_semaine(id_user):
+    mydb = acces_bdd()  
+     # Create cursor object to execute queries
+    cursor = mydb.cursor()
+
+    infos_sessions_semaine_query ='''
+    SELECT MEAN(score) FROM session 
+    WHERE id_user = %s AND date BETWEEN DATE_TRUNC('week', CURRENT_DATE) AND
+    DATE_TRUNC('week', CURRENT_DATE) - INTERVAL '6 days';
+    '''
+    cursor.execute(infos_sessions_semaine_query, (id_user,))
+    infos_sessions_semaine_result = cursor.fetchone()[0]
+    score_pourcentage_semaine = infos_sessions_semaine_result/5*100
+
+    cursor.close()
+    mydb.close()
+
+    return score_pourcentage_semaine
+
+def progression(id_user){
+    mydb = acces_bdd()  
+     # Create cursor object to execute queries
+    cursor = mydb.cursor()
+
+    infos_progression_semaine_query ='''
+    SELECT date, score FROM session 
+    WHERE id_user = %s AND date BETWEEN DATE_TRUNC('week', CURRENT_DATE) AND
+    DATE_TRUNC('week', CURRENT_DATE) - INTERVAL '6 days';
+    '''
+    cursor.execute(infos_progression_semaine_query, (id_user,))
+    infos_progression_semaine_result = cursor.fetchall()
+    
+    data=[("date": score_obtenu)]
+    data =[("01-01-2024", 5),("01-01-2024", 3),("01-01-2024", 1)]
+    cursor.close()
+    mydb.close()
+
+    return score_pourcentage_semaine
+}
+    
 
 # mydn = mysql.connect(
 #     host = 'localhost',

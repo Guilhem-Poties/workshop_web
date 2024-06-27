@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PAGE SESSION</title>
+    <title>PAGE PROGRESSION</title>
     <script src="session.js"></script>
 </head>
 
@@ -19,15 +19,13 @@
         <!-- route vers compte -->
     </header>
 
-    {% for theme in theme_list %}
-    <a href="api/v1/question.html/{{theme.id}}">
-        <div class="container">
-            <!-- RÉCUPÉRER ET AFFICHER LES THÈMES DE LA BDD + lien vers la progression ou question? -->
-            <h2>{{theme.libelle}}</h2>
-            <p>Progression</p>
-        </div>
+
+
+    <div class="container">
+        <!-- RÉCUPÉRER ET AFFICHER LES THÈMES DE LA BDD + lien vers la progression ou question? -->
+        <h2>Grpahe de progression de cette semaine : </h2>
+    </div>
     </a>
-    {% endfor %}
 
 
 </body>

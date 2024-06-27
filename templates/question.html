@@ -33,7 +33,7 @@
     </div>
 
     <script>
-        const list_questions = await fetch("/question", method="GET");
+        const list_questions = await fetch("/question", method = "GET");
         var question_actuelle = {};
         var reponses = {};
         var compteur_question = 0;
@@ -44,20 +44,20 @@
         });
 
         function display_question() {
-            document.getElementsByClassName("question-container")[0].innerHTML = ` <h2>Question `+compteur_question+`</h2> 
-                                                                                <p>`+question_actuelle["libelle"]+`</p>`;
+            document.getElementsByClassName("question-container")[0].innerHTML = ` <h2>Question ` + compteur_question + `</h2> 
+                                                                                <p>` + question_actuelle["libelle"] + `</p>`;
 
             for (const reponse in reponses) {
-                var image = document.getElementById(`reponse-`+ reponse);
+                var image = document.getElementById(`reponse-` + reponse);
                 image.setAttribute("src", reponses[reponse]["image"]);
                 image.setAttribute("alt", reponses[reponse]["libelle"]);
-                image.setAttribute("onclick", `check_reponse(`+reponse+`)`)
+                image.setAttribute("onclick", `check_reponse(` + reponse + `)`)
 
                 if (question_actuelle["bonne reponse"] == reponses[reponse]["id"]) {
                     texte_bonne_reponse = reponses[reponse]["libelle"];
                 }
             }
-            
+
             var bouton = document.getElementById("bouton-suivant");
             var correction = document.getElementById("correction");
 
@@ -72,8 +72,7 @@
 
             if (reponses[reponse]["id"] == question_actuelle["bonne reponse"]) {
                 var texte = `Correct ! La bonne réponse est bien `;
-            } 
-            else {
+            } else {
                 var texte = `Faux ! La bonne réponse était `
             }
 
@@ -83,7 +82,7 @@
             correction.innerHTML = texte + texte_bonne_reponse;
 
             for (const element in reponses) {
-                document.getElementById(`reponse-`+ element).removeAttribute("onclick")
+                document.getElementById(`reponse-` + element).removeAttribute("onclick")
             }
         }
 
@@ -91,7 +90,7 @@
             question_actuelle = list_questions[compteur_question];
             reponses = question_actuelle["reponses"];
             compteur_question++;
-            
+
             display_question();
         }
     </script>
