@@ -33,50 +33,7 @@
     </div>
 
     <script>
-        const list_questions = {
-            0: {
-                "libelle": "Que produisent les vaches ?",
-                "bonne reponse": "0101010101",
-                "reponses": {
-                    0: {
-                        "libelle": "du lait",
-                        "image": "data/images/lait.png",
-                        "id": "0101010101",
-                    },
-                    1: {
-                        "libelle": "du fromage",
-                        "image": "data/images/fromage.png",
-                        "id": "0101010102",
-                    },
-                    2: {
-                        "libelle": "des oeufs",
-                        "image": "data/images/oeufs.png",
-                        "id": "0101010103",
-                    },
-                }
-            },
-            1: {
-                "libelle": "Que produisent les moutons ?",
-                "bonne reponse": "0101010101",
-                "reponses": {
-                    0: {
-                        "libelle": "du lait",
-                        "image": "data/images/lait.png",
-                        "id": "0101010101",
-                    },
-                    1: {
-                        "libelle": "du fromage",
-                        "image": "data/images/fromage.png",
-                        "id": "0101010102",
-                    },
-                    2: {
-                        "libelle": "des oeufs",
-                        "image": "data/images/oeufs.png",
-                        "id": "0101010103",
-                    },
-                }
-            },
-        };
+        const list_questions = await fetch("/question", method="GET");
         var question_actuelle = {};
         var reponses = {};
         var compteur_question = 0;

@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PAGE SESSION</title>
+    <script src="session.js"></script>
 </head>
 
 <body>
@@ -20,14 +21,14 @@
 
     {% for theme in theme_list %}
     <a href="question.html/{{theme.id}}">
-        <div class="container">
+    <div class="container">
             <!-- RÉCUPÉRER ET AFFICHER LES THÈMES DE LA BDD + lien vers la progression ou question? -->
             <h2>{{theme.libelle}}</h2>
-        </div>
+    </div>
     </a>
     {% endfor %}
 
-
+        
 </body>
 
 </html>
