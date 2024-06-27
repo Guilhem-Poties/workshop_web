@@ -36,41 +36,43 @@
         const list_questions = {
             0: {
                 "libelle": "Que produisent les vaches ?",
+                "bonne reponse": "0101010101",
                 "reponses": {
                     0: {
-                        "libelle": "Du lait",
+                        "libelle": "du lait",
                         "image": "data/images/lait.png",
-                        "bonne reponse": true,
+                        "id": "0101010101",
                     },
                     1: {
-                        "libelle": "Du fromage",
+                        "libelle": "du fromage",
                         "image": "data/images/fromage.png",
-                        "bonne reponse": false,
+                        "id": "0101010102",
                     },
                     2: {
-                        "libelle": "Des oeufs",
+                        "libelle": "des oeufs",
                         "image": "data/images/oeufs.png",
-                        "bonne reponse": false,
+                        "id": "0101010103",
                     },
                 }
             },
             1: {
                 "libelle": "Que produisent les moutons ?",
+                "bonne reponse": "0101010101",
                 "reponses": {
                     0: {
-                        "libelle": "Du lait",
+                        "libelle": "du lait",
                         "image": "data/images/lait.png",
-                        "bonne reponse": true,
+                        "id": "0101010101",
                     },
                     1: {
-                        "libelle": "Du fromage",
+                        "libelle": "du fromage",
                         "image": "data/images/fromage.png",
-                        "bonne reponse": false,
+                        "id": "0101010102",
                     },
                     2: {
-                        "libelle": "Des oeufs",
+                        "libelle": "des oeufs",
                         "image": "data/images/oeufs.png",
-                        "bonne reponse": false,
+                        "id": "0101010103",
                     },
                 }
             },
@@ -78,7 +80,7 @@
         var question_actuelle = {};
         var reponses = {};
         var compteur_question = 0;
-        var bonne_reponse = "";
+        var texte_bonne_reponse = "";
 
         window.addEventListener("load", (event) => {
             question_suivante();
@@ -93,17 +95,25 @@
                 image.setAttribute("src", reponses[reponse]["image"]);
                 image.setAttribute("alt", reponses[reponse]["libelle"]);
                 image.setAttribute("onclick", `check_reponse(`+reponse+`)`)
-                if ([reponse]["bonne reponse"]) {
-                    bonne_reponse = [reponse]["libelle"];
+
+                if (question_actuelle["bonne reponse"] == reponses[reponse]["id"]) {
+                    texte_bonne_reponse = reponses[reponse]["libelle"];
                 }
             }
+            
+            var bouton = document.getElementById("bouton-suivant");
+            var correction = document.getElementById("correction");
+
+            bouton.style.visibility = "hidden";
+            bouton.disabled = true
+            correction.style.visibility = "hidden";
         }
 
         function check_reponse(reponse) {
             var bouton = document.getElementById("bouton-suivant");
             var correction = document.getElementById("correction");
 
-            if (list_questions[compteur_question-1]["reponses"][reponse]["bonne reponse"]) {
+            if (reponses[reponse]["id"] == question_actuelle["bonne reponse"]) {
                 var texte = `Correct ! La bonne réponse est bien `;
             } 
             else {
@@ -111,13 +121,12 @@
             }
 
             bouton.style.visibility = "visible";
-            bouton.removeAttribute("disabled");
+            bouton.disabled = false;
             correction.style.visibility = "visible";
-            correction.innerHTML = texte + bonne_reponse;
+            correction.innerHTML = texte + texte_bonne_reponse;
 
-            for (const reponse in reponses) {
-                var image = document.getElementById(`reponse-`+ reponse);
-                image.removeAttribute("onclick")
+            for (const element in reponses) {
+                document.getElementById(`reponse-`+ element).removeAttribute("onclick")
             }
         }
 
