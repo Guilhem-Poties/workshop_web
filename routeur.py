@@ -19,7 +19,7 @@ app = Flask(__name__)
 
 CORS(app)
 
-id_theme = 0 
+id_theme = 0
 
 # infos_utilisateur={}
 # liste_themes={}
@@ -30,12 +30,18 @@ id_theme = 0
 # def index():
 #     return render_template('index.html')
 
+@app.route("/question/<id>", methods=['GET', 'POST'])
+def question(id):
+    global id_theme
+    id_theme = id
+    print(id)
+    return render_template('question.html')
 
-@app.route("/api/v1/question/<id>", methods=['GET'])
+
+@app.route("/api/v1/question", methods=['GET', 'POST'])
 def create_question():
-    id_theme=id
     quest = model.recuperer_questions(id_theme)
-    return render_template('question.html', list_questions=quest)
+    return quest
 
 # @app.route("/connexion", methods=['POST', 'GET'])
 # def session():
@@ -91,10 +97,10 @@ def theme():
     return render_template("index.html", theme_list=themes)
 
 
-@app.route("/progression",  methods=['POST', 'GET'])
-def progression():
-    liste_dates_et_scores = model.progression_semaine() 
-    return render_template("progression.html", liste_dates_scores = dates_et_scores)
+# @app.route("/progression",  methods=['POST', 'GET'])
+# def progression():
+#     liste_dates_et_scores = model.progression_semaine() 
+#     return render_template("progression.html", liste_dates_scores = dates_et_scores)
 # @app.route("/question/<theme_id>", methods=['POST', 'GET'])
 # def question():
 #     themes = model.recuperer_themes()
