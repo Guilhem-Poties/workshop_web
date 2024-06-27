@@ -35,6 +35,23 @@ def insert_user(nom, prenom, email, date_naissance, mdp):
             mydb.close()
             print("MySQL connection is closed")
 
+def progression_theme(id_theme, id_user):
+    mydb = acces_bdd()  
+     # Create cursor object to execute queries
+    cursor = mydb.cursor()
+
+    infos_session_query ='''
+    SELECT MEAN(score) FROM session WHERE id_theme = %s AND id_user = %s 
+    '''
+    cursor.execute(infos_session_query, (id_theme,), (id_user,))
+    infos_session_query_result = cursor.fetchone()[0]
+    score_pourcentage = infos_session_query_result/5*100
+
+    cursor.close()
+    mydb.close()
+
+    return score_pourcentage
+    
 
 def recuperer_themes():
     mydb = acces_bdd()  
@@ -80,7 +97,6 @@ def recuperer_questions(id_theme):
      # Create cursor object to execute queries
     cursor = mydb.cursor()
     
-    # Define the SQL query to count themes
     
     infos_questions_reponses_query ='''
     SELECT question.id_question, question.libelle, question.id_bonne_reponse, reponse.id, reponse.libelle, reponse.image 
@@ -169,52 +185,12 @@ def verif_connexion(email, mot_de_passe):
     return known
 
 
-# def trouver_question():
-#     acces_bdd()
-#     query = '''
-#     SELECT libelle FROM question WHERE id_theme == {id_theme_choisi}
-#     '''
-
-
-# def trouver_bonne_reponse():
-#     acces_bdd()
-#     query = '''
-#     SELECT libelle FROM reponse WHERE id_question == {id_question_en_cours}
-#     '''
-
-
-
 # mydn = mysql.connect(
 #     host = 'localhost',
 #     user = 'root',
 #     password = '',
 #     database = 'quizoo'
 # )
-
-# @app.route("/index", methods = ['POST', 'GET'])
-# def index():
-#     # mycursor = mydb.cursor()
-#     # mycursor.execute("SELECT * FROM question")
-#     # allQuestions = mycursor.fetchall()
-#     # print(allQuestions)
-
-#     if request.method == 'GET':
-#         return render_template('session.html')
-#         # return "Login via the login Form"
-     
-    
-#     if request.method == 'POST':
-#             nom = request.form['nom']
-#             prenom = request.form['prenom']
-#             mail = request.form['email']
-#             date_de_naissance = request.form['date_de_naissance']
-#             mdp = request.form['mot_de_passe']
-#             cursor = mysql.connection.cursor()
-#             cursor.execute(''' INSERT INTO utilisateur VALUES(id,nom, prenom, mail, date_naissance, mdp)''',(nom, prenom, mail, date_de_naissance, mdp))
-#             mysql.connection.commit()
-#             cursor.close()
-#             return f"Done!!"
-
 
 # ##### INFOS SUR UN SITE 
 # # mysql = MySQL(app)
