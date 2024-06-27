@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PAGE SESSION</title>
+    <title>PAGE PROGRESSION</title>
 </head>
 
 <body>
@@ -17,16 +17,8 @@
         <a href="/compte">Compte</a>
         <!-- route vers compte -->
     </header>
+    <p>{{liste_donnees_user}}</p>
 
-    {% for theme in theme_list %}
-    <a href="/question/{{theme.id}}">
-        <div class="container">
-            <!-- RÉCUPÉRER ET AFFICHER LES THÈMES DE LA BDD + lien vers la progression ou question? -->
-            <h2>{{theme.libelle}}</h2>
-            <p>Progression</p>
-        </div>
-    </a>
-    {% endfor %}
 
 
 </body>

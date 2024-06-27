@@ -1,5 +1,6 @@
 from flask import jsonify
 
+
 import mysql.connector
 # ############# si routeur.py est dans une autre dossier de modele.py
 # # import sys
@@ -15,7 +16,7 @@ def acces_bdd():
         host='127.0.0.1',
         port=3306,
         user="root",
-        password="root",
+        password="",
         database="quizoo",
     )
     return mydb
@@ -35,13 +36,28 @@ def insert_user(nom, prenom, email, date_naissance, mdp):
             mydb.close()
             print("MySQL connection is closed")
 
+def donnees_user(mail_user):
+    mydb = acces_bdd()  
+    cursor = mydb.cursor()
+    
+    infos_user_query = '''
+    SELECT * FROM utilisateur WHERE mail = %s;
+    '''
+    
+    cursor.execute(infos_user_query, (mail_user,))
+    infos_user_result = cursor.fetchone()
+
+    cursor.close()
+    mydb.close()
+    print (infos_user_result)
+    
+    return infos_user_result
+
 
 def recuperer_themes():
     mydb = acces_bdd()  
-     # Create cursor object to execute queries
     cursor = mydb.cursor()
     
-    # Define the SQL query to count themes
     nb_theme_query = '''
     SELECT COUNT(id) FROM theme;
     '''
@@ -51,7 +67,6 @@ def recuperer_themes():
     libelle_theme_query = '''
     SELECT libelle FROM theme;
     '''
-    # Execute the queries and fetch the results
     cursor.execute(nb_theme_query)
     nb_theme_result = cursor.fetchone()[0]  # Fetch the count result
     
@@ -76,7 +91,7 @@ def recuperer_themes():
 
 
 def recuperer_questions(id_theme):
-    mydb = acces_bdd()
+    mydb = acces_bdd()  
      # Create cursor object to execute queries
     cursor = mydb.cursor()
     
@@ -174,7 +189,7 @@ def moyenne_score_theme(id_theme, id_user):
     cursor = mydb.cursor()
 
     infos_session_query ='''
-    SELECT MEAN(score) FROM session WHERE id_theme = %s AND id_user = %s 
+    SELECT MEAN(score) FROM session WHERE id_theme = %s AND id_user = %s ;
     '''
     cursor.execute(infos_session_query, (id_theme,), (id_user,))
     infos_session_query_result = cursor.fetchone()[0]
@@ -204,26 +219,29 @@ def moyenne_score_semaine(id_user):
 
     return score_pourcentage_semaine
 
-# def progression(id_user){
-#     mydb = acces_bdd()  
-#      # Create cursor object to execute queries
-#     cursor = mydb.cursor()
+def progression_semaine(mail_user):
+    mydb = acces_bdd()  
+     # Create cursor object to execute queries
+    cursor = mydb.cursor()
 
-#     infos_progression_semaine_query ='''
-#     SELECT date, score FROM session 
-#     WHERE id_user = %s AND date BETWEEN DATE_TRUNC('week', CURRENT_DATE) AND
-#     DATE_TRUNC('week', CURRENT_DATE) - INTERVAL '6 days';
-#     '''
-#     cursor.execute(infos_progression_semaine_query, (id_user,))
-#     infos_progression_semaine_result = cursor.fetchall()
+    infos_progression_semaine_query ='''
+    SELECT date, score FROM session 
+    JOIN utilisateur ON utilisateur.id = session.id_user
+    WHERE utilisateur.mail = %s AND session.date BETWEEN DATE_TRUNC('week', CURRENT_DATE) AND
+    DATE_TRUNC('week', CURRENT_DATE) - INTERVAL '6 days';
+    '''
+    cursor.execute(infos_progression_semaine_query, (id_user,))
+    infos_progression_semaine_result = cursor.fetchall()
     
-#     data=[("date": score_obtenu)]
-#     data =[("01-01-2024", 5),("01-01-2024", 3),("01-01-2024", 1)]
-#     cursor.close()
-#     mydb.close()
+    # data=[("date": score_obtenu)]
+    donnee_progression_semaine =[("01-01-2024", 5),("01-01-2024", 3),("01-01-2024", 1)]
+    cursor.close()
+    mydb.close()
 
-#     return score_pourcentage_semaine
-# }
+    date=[row[0] for row in donnee_progression_semaine]
+    score=[row[1] for row in donnee_progression_semaine]
+    return donnee_progression_semaine
+
     
 
 # mydn = mysql.connect(
