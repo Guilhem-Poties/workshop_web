@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost:8889
--- Généré le : jeu. 27 juin 2024 à 10:45
+-- Généré le : ven. 28 juin 2024 à 07:58
 -- Version du serveur :  5.7.34
 -- Version de PHP : 7.4.21
 
@@ -73,30 +73,30 @@ CREATE TABLE `reponse` (
 --
 
 INSERT INTO `reponse` (`id`, `libelle`, `image`, `id_question`) VALUES
-(0, 'Du lait', NULL, 0),
-(1, 'Du fromage', NULL, 0),
-(2, 'Des oeufs', NULL, 0),
-(3, 'Carnivore', NULL, 1),
-(4, 'Herbivore', NULL, 1),
-(5, 'Omnivore', NULL, 1),
-(6, 'Le veau', NULL, 2),
-(7, 'Le poussin', NULL, 2),
-(8, 'Le coq', NULL, 2),
-(9, 'Le chien', NULL, 3),
-(10, 'La poule', NULL, 3),
-(11, 'Le cheval', NULL, 3),
-(12, 'Le cochon', NULL, 4),
-(13, 'Le coq', NULL, 4),
-(14, 'Le lapin', NULL, 4),
-(15, '10 000 plumes', NULL, 5),
-(16, '7 000 plumes', NULL, 5),
-(17, '5 000 plumes', NULL, 5),
-(18, 'L\'autruche', NULL, 6),
-(19, 'L\'aigle royal', NULL, 6),
-(20, 'Le marabout d\'Afrique', NULL, 6),
-(21, '10 mots', NULL, 7),
-(22, '100 mots', NULL, 7),
-(23, '1 000 mots', NULL, 7),
+(0, 'Du lait', '../images/question0_reponse0.png', 0),
+(1, 'Du fromage', '../images/question0_reponse1.png', 0),
+(2, 'Des oeufs', '../images/question0_reponse2.png', 0),
+(3, 'Carnivore', '../images/question1_reponse0.png', 1),
+(4, 'Herbivore', '../images/question1_reponse1.png', 1),
+(5, 'Omnivore', '../images/question1_reponse2.png', 1),
+(6, 'Le veau', '../images/question2_reponse0.png', 2),
+(7, 'Le poussin', '../images/question2_reponse1.png', 2),
+(8, 'Le coq', '../images/question2_reponse2.png', 2),
+(9, 'Le chien', '../images/question3_reponse0.png', 3),
+(10, 'La poule', '../images/question3_reponse1.png', 3),
+(11, 'Le cheval', '../images/question3_reponse2.png', 3),
+(12, 'Le cochon', '../images/question4_reponse0.png', 4),
+(13, 'Le coq', '../images/question4_reponse1.png', 4),
+(14, 'Le lapin', '../images/question4_reponse2.png', 4),
+(15, '10 000 plumes', '../images/question5_reponse0.png', 5),
+(16, '7 000 plumes', '../images/question5_reponse1.png', 5),
+(17, '5 000 plumes', '../images/question5_reponse2.png', 5),
+(18, 'L\'autruche', '../images/question6_reponse0.png', 6),
+(19, 'L\'aigle royal', '../images/question6_reponse1.png', 6),
+(20, 'Le marabout d\'Afrique', '../images/question6_reponse2.png', 6),
+(21, '10 mots', '../images/question7_reponse0.png', 7),
+(22, '100 mots', '../images/question7_reponse1.png', 7),
+(23, '1 000 mots', '../images/question7_reponse2.png', 7),
 (24, 'Vert et jaune', NULL, 8),
 (25, 'Bleu et orange', NULL, 8),
 (26, 'Rouge et noir', NULL, 8),
