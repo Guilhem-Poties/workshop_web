@@ -130,21 +130,21 @@ def connexion():
 @app.route("/index", methods=['POST', 'GET'])
 def theme():
     if not session.get("name"):
-        return redirect("/connexion")
+        return redirect("/")
     themes = model.recuperer_themes()
     return render_template("index.html", theme_list=themes)
 
 @app.route('/compte', methods=['POST', 'GET'])
 def compte():
     if not session.get("name"):
-        return redirect("/connexion")
+        return redirect("/")
     liste_donnees_user = model.donnees_user(session['name'])
     return render_template("compte.html", liste_donnees_user=liste_donnees_user)
 
 @app.route("/progression",  methods=['POST', 'GET'])
 def progression():
     if not session.get("name"):
-        return redirect("/connexion")
+        return redirect("/")
     liste_dates_et_scores = model.progression_semaine(session['name']) 
     return render_template("progression.html", dates_et_scores = liste_dates_et_scores)
 
