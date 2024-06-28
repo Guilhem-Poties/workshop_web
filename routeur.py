@@ -44,14 +44,39 @@ def question(id):
     id_theme = id
     print(id)
     return render_template('question.html')
+        
 
 @app.route("/api/v1/question", methods=['GET', 'POST'])
 def create_question():
     if not session.get("name"):
         # if not there in the session then redirect to the login page
         return redirect("/connexion")
-    quest = model.recuperer_questions(id_theme)
-    return quest
+    
+    if request.method == 'GET':
+        quest = model.recuperer_questions(id_theme)
+        return quest
+    
+    if request.method == 'POST':
+        try:
+            data = request.get_json()
+
+            score = data['score']
+
+            print("Session created succesfully")
+
+            model.insert_session()
+
+        except Exception as e:
+            print(f"Error: {e}")
+            return "An error occurred"
+        data = request.get_json()
+
+        if 'valeur' not in data:
+            return jsonify({"error": "Missing 'value' in request body"}), 400
+        
+        score = data['value']
+
+        
 
 
 # @app.route("/connexion", methods=['POST', 'GET'])
