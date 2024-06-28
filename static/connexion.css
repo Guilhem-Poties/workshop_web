@@ -25,6 +25,10 @@ header {
     background-color: #91972a;
 }
 
+header img {
+    width: 50px;
+}
+
 .connexion-inscription {
     display: flex;
     order: 2;
@@ -63,5 +67,5 @@ input {
 
 /* #EC7505 orange
 #0FA3B1 blockquote
-283618 vert foncé
+#283618 vert foncé
 #FFFBDB beige */

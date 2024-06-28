@@ -16,7 +16,25 @@ header {
     /* rgba(0, 0, 0, 0.2); opacity: 4; */
     padding: 1vw;
     /* flex-direction: row; */
-    box-shadow: 0px 5px 10px rgba(39, 39, 39, 0.767);
+    box-shadow: 0px 5px 10px #283618;
+}
+
+header img {
+    width: 50px;
+}
+
+p {
+    margin: 0.5vw;
+}
+
+.infos-user {
+    margin: 2vw;
+}
+
+.deconnexion {
+    background-color: #EC7505;
+    border-radius: 15px;
+    color: #FFFBDB;
 }
 
 

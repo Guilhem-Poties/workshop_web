@@ -26,7 +26,11 @@ header {
 .container-theme {
     padding: 2vw;
     margin: 1vw;
-    background-color: #91972a;
+    background-color: #EC7505;
+}
+
+header img {
+    width: 50px;
 }
 
 
