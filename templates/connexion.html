@@ -25,6 +25,11 @@
                     <label for="MDP" class="titre-case-connexion">Mot de passe</label>
                     <input type="text" name="mdp" id="mdp" placeholder="Mot de passe" class="case-connexion">
                 </div>
+                {%if erreur == "connexion"%}
+                <div class="erreur-form">
+                    <p>Mail ou mot de passe incorrect</p>
+                </div>
+                {% endif %}
                 <div class="elements-form">
                     <input type="submit" style="background-color:#EC7505; color:#FFFBDB;" value="JOUER">
                 </div>
@@ -55,6 +60,11 @@
                     <label for="MDP">Mot de passe</label>
                     <input type="password" name="mdp" id="mdp" placeholder="Mot de passe" class="case-inscription">
                 </div>
+                {%if erreur == "inscription"%}
+                <div class="erreur-form">
+                    <p>Mail déjà pris</p>
+                </div>
+                {% endif %}
                 <div class="elements-form">
                     <input type="submit" style="background-color:#91972a; color:#FFFBDB;" value="VALIDER">
                 </div>

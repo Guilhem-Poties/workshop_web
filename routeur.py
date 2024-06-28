@@ -85,7 +85,7 @@ def create_question():
 
 @app.route("/", methods=['GET'])
 def connexion_get():
-    return render_template('connexion.html')
+    return render_template('connexion.html', erreur="none")
 
 @app.route("/inscription", methods=['POST'])
 def inscription():
@@ -98,7 +98,7 @@ def inscription():
 
         if model.verif_email(email):
             print("Error: email already taken")
-            return redirect("/")
+            return render_template('connexion.html', erreur = "inscription")
 
         print(f"Received data: {nom}, {prenom}, {email}, {date_naissance}, {mdp}")
         model.insert_user(nom, prenom, email, date_naissance, mdp)
@@ -116,7 +116,7 @@ def connexion():
         mdp = request.form['mdp']
 
         if not model.verif_connexion(email, mdp):
-            return "Error: user not found. Try again or register"
+            return render_template('connexion.html', erreur = "connexion")
 
         print("User connected successfully!")
         session["name"] = request.form.get("email")
