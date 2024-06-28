@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost:8889
--- Généré le : ven. 28 juin 2024 à 09:58
+-- Généré le : ven. 28 juin 2024 à 10:27
 -- Version du serveur :  5.7.34
 -- Version de PHP : 7.4.21
 
@@ -99,25 +99,25 @@ INSERT INTO `reponse` (`id`, `libelle`, `image`, `id_question`) VALUES
 (23, '1 000 mots', '../static/images/question7_reponse2.png', 7),
 (24, 'Vert et jaune', '../static/images/question8_reponse0.png', 8),
 (25, 'Bleu et orange', '../static/images/question8_reponse1.png', 8),
-(26, 'Rouge et noir', '../static/images/question9_reponse2.png', 8),
-(27, 'Les pigeons', '../static/images/question10_reponse0.png', 9),
-(28, 'Les moineaux', '../static/images/question10_reponse1.png', 9),
-(29, 'Les colibris', '../static/images/question10_reponse2.png', 9),
-(30, 'Entre 40 et 80 kilos', '../static/images/question11_reponse0.png', 10),
-(31, 'Entre 80 et 120 kilos', '../static/images/question11_reponse1.png', 10),
-(32, 'Entre 120 et 160 kilos', '../static/images/question11_reponse2.png', 10),
-(33, 'Des plantes', '../static/images/question12_reponse0.png', 11),
-(34, 'De la viande', '../static/images/question12_reponse1.png', 11),
-(35, 'Du poisson', '../static/images/question12_reponse2.png', 11),
-(36, '9 mois', '../static/images/question13_reponse0.png', 12),
-(37, '21 mois', '../static/images/question13_reponse1.png', 12),
-(38, '15 mois', '../static/images/question13_reponse2.png', 12),
-(39, 'Le leopard ', '../static/images/question14_reponse0.png', 13),
-(40, 'Le guépard ', '../static/images/question14_reponse1.png', 13),
-(41, 'Le lion', '../static/images/question14_reponse2.png', 13),
-(42, 'Vrai', '../static/images/question15_reponse0.png', 14),
-(43, 'Faux', '../static/images/question15_reponse1.png', 14),
-(44, 'Je ne sais pas', '../static/images/question15_reponse2.png', 14);
+(26, 'Rouge et noir', '../static/images/question8_reponse2.png', 8),
+(27, 'Les pigeons', '../static/images/question9_reponse0.png', 9),
+(28, 'Les moineaux', '../static/images/question9_reponse1.png', 9),
+(29, 'Les colibris', '../static/images/question9_reponse2.png', 9),
+(30, 'Entre 40 et 80 kilos', '../static/images/question10_reponse0.png', 10),
+(31, 'Entre 80 et 120 kilos', '../static/images/question10_reponse1.png', 10),
+(32, 'Entre 120 et 160 kilos', '../static/images/question10_reponse2.png', 10),
+(33, 'Des plantes', '../static/images/question11_reponse0.png', 11),
+(34, 'De la viande', '../static/images/question11_reponse1.png', 11),
+(35, 'Du poisson', '../static/images/question11_reponse2.png', 11),
+(36, '9 mois', '../static/images/question12_reponse0.png', 12),
+(37, '21 mois', '../static/images/question12_reponse1.png', 12),
+(38, '15 mois', '../static/images/question12_reponse2.png', 12),
+(39, 'Le leopard ', '../static/images/question13_reponse0.png', 13),
+(40, 'Le guépard ', '../static/images/question13_reponse1.png', 13),
+(41, 'Le lion', '../static/images/question13_reponse2.png', 13),
+(42, 'Vrai', '../static/images/question14_reponse0.png', 14),
+(43, 'Faux', '../static/images/question14_reponse1.png', 14),
+(44, 'Je ne sais pas', '../static/images/question14_reponse2.png', 14);
 
 -- --------------------------------------------------------
 
