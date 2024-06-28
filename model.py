@@ -183,13 +183,15 @@ def verif_connexion(email, mot_de_passe):
     return known
 
 
-def moyenne_score_theme(id_theme, id_user):
+def moyenne_score_theme(id_theme, mail_user):
     mydb = acces_bdd()  
      # Create cursor object to execute queries
     cursor = mydb.cursor()
 
     infos_session_query ='''
-    SELECT MEAN(score) FROM session WHERE id_theme = %s AND id_user = %s ;
+    SELECT MEAN(score) FROM session 
+    JOIN utilisateur ON utilisateur.id = session.id_user
+    WHERE id_theme = %s AND utilisateur.mail = %s ;
     '''
     cursor.execute(infos_session_query, (id_theme,), (id_user,))
     infos_session_query_result = cursor.fetchone()[0]
@@ -200,17 +202,18 @@ def moyenne_score_theme(id_theme, id_user):
 
     return score_pourcentage_theme
     
-def moyenne_score_semaine(id_user):
+def moyenne_score_semaine(mail_user):
     mydb = acces_bdd()  
      # Create cursor object to execute queries
     cursor = mydb.cursor()
 
     infos_sessions_semaine_query ='''
     SELECT MEAN(score) FROM session 
-    WHERE id_user = %s AND date BETWEEN DATE_TRUNC('week', CURRENT_DATE) AND
+    JOIN utilisateur ON utilisateur.id = session.id_user
+    WHERE utilisateur.mail = %s AND date BETWEEN DATE_TRUNC('week', CURRENT_DATE) AND
     DATE_TRUNC('week', CURRENT_DATE) - INTERVAL '6 days';
     '''
-    cursor.execute(infos_sessions_semaine_query, (id_user,))
+    cursor.execute(infos_sessions_semaine_query, (mail_user,))
     infos_sessions_semaine_result = cursor.fetchone()[0]
     score_pourcentage_semaine = infos_sessions_semaine_result/5*100
 
@@ -223,24 +226,37 @@ def progression_semaine(mail_user):
     mydb = acces_bdd()  
      # Create cursor object to execute queries
     cursor = mydb.cursor()
-
-    infos_progression_semaine_query ='''
-    SELECT date, score FROM session 
+    ##on cherche la date du debut de la semaine et de la fin de la semaine
+    # infos_progression_semaine_query ='''
+    
+    # SELECT session.date, session.score
+    # FROM session
+    # JOIN utilisateur ON utilisateur.id = session.id_user
+    # WHERE utilisateur.mail = %s
+    # AND session.date BETWEEN
+    #     DATE_SUB(CURDATE(), INTERVAL WEEKDAY(CURDATE()) DAY)
+    #     AND DATE_ADD(DATE_SUB(CURDATE(), INTERVAL WEEKDAY(CURDATE()) DAY), INTERVAL 6 DAY);
+    # '''
+    infos_progression_semaine_query = '''
+    SELECT session.date, session.score
+    FROM session
     JOIN utilisateur ON utilisateur.id = session.id_user
-    WHERE utilisateur.mail = %s AND session.date BETWEEN DATE_TRUNC('week', CURRENT_DATE) AND
-    DATE_TRUNC('week', CURRENT_DATE) - INTERVAL '6 days';
+    WHERE utilisateur.mail = %s
+    AND session.date BETWEEN
+        DATE_SUB(CURDATE(), INTERVAL 1 WEEK) AND CURDATE()
+        ORDER BY date;
     '''
-    cursor.execute(infos_progression_semaine_query, (id_user,))
+    cursor.execute(infos_progression_semaine_query, (mail_user,))
     infos_progression_semaine_result = cursor.fetchall()
     
     # data=[("date": score_obtenu)]
-    donnee_progression_semaine =[("01-01-2024", 5),("01-01-2024", 3),("01-01-2024", 1)]
+    # donnee_progression_semaine =[("01-01-2024", 5),("01-01-2024", 3),("01-01-2024", 1)]
     cursor.close()
     mydb.close()
 
-    date=[row[0] for row in donnee_progression_semaine]
-    score=[row[1] for row in donnee_progression_semaine]
-    return donnee_progression_semaine
+    # date=[row[0] for row in donnee_progression_semaine]
+    # score=[row[1] for row in donnee_progression_semaine]
+    return infos_progression_semaine_result
 
     
 
