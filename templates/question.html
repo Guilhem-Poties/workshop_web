@@ -37,6 +37,16 @@
         var score = 0;
 
         window.addEventListener("load", async function(event) {
+            load_questions().then(list_questions => {
+                if (list_questions) {
+                    localStorage.setItem("list_questions", JSON.stringify(list_questions));
+                    console.log('Questions successfully stored in localStorage.');
+                }
+                else {
+                    console.log('Error, questions not stored in localStorage.');
+                }
+            })
+
             question_suivante();
         });
 
@@ -45,6 +55,8 @@
                 method: "GET"
             });
             const list_questions = await response.json();
+
+            //localStorage.setItem("list_questions", list_questions);
 
             return list_questions;
         }
@@ -66,9 +78,11 @@
         }
 
         async function check_reponse(reponse) {
-            const list_questions = await load_questions();
-            const question_actuelle = list_questions[compteur_question - 1];
-
+            data = localStorage.getItem("list_questions");
+            const list_questions = JSON.parse(data);
+            keys = Object.keys(list_questions)
+            var question_actuelle = list_questions[keys[compteur_question-1]];
+            
             var bouton = document.getElementById("bouton-suivant");
             var correction = document.getElementById("correction");
 
@@ -96,8 +110,10 @@
         }
 
         async function question_suivante() {
-            const list_questions = await load_questions();
-            var question_actuelle = list_questions[compteur_question];
+            data = localStorage.getItem("list_questions");
+            const list_questions = JSON.parse(data);
+            keys = Object.keys(list_questions)
+            var question_actuelle = list_questions[keys[compteur_question]];
 
             // Cache la partie correction 
             var bouton = document.getElementById("bouton-suivant");
