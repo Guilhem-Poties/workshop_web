@@ -190,38 +190,41 @@ def moyenne_score_theme(id_theme, mail_user):
     cursor = mydb.cursor()
 
     infos_session_query ='''
-    SELECT MEAN(score) FROM session 
+    SELECT theme.libelle, (AVG(score) / 5) * 100 AS moyenne_score_pourcentage
+    FROM session 
     JOIN utilisateur ON utilisateur.id = session.id_user
-    WHERE id_theme = %s AND utilisateur.mail = %s ;
+    JOIN theme ON session.id_theme = theme.id
+    WHERE id_theme = %s AND utilisateur.mail = %s
+    GROUP BY theme.libelle;
     '''
-    cursor.execute(infos_session_query, (id_theme,), (id_user,))
-    infos_session_query_result = cursor.fetchone()[0]
-    score_pourcentage_theme = infos_session_query_result/5*100
+    cursor.execute(infos_session_query, (id_theme,), (mail_user,))
+    infos_progression_semaine_result = cursor.fetchall()
 
     cursor.close()
     mydb.close()
 
-    return score_pourcentage_theme
-    
+    return infos_progression_semaine_result
+
 def moyenne_score_semaine(mail_user):
     mydb = acces_bdd()  
      # Create cursor object to execute queries
     cursor = mydb.cursor()
 
     infos_sessions_semaine_query ='''
-    SELECT MEAN(score) FROM session 
+    SELECT theme.libelle, (AVG(score) / 5) * 100 as score _poucentage
+    FROM session 
     JOIN utilisateur ON utilisateur.id = session.id_user
-    WHERE utilisateur.mail = %s AND date BETWEEN DATE_TRUNC('week', CURRENT_DATE) AND
-    DATE_TRUNC('week', CURRENT_DATE) - INTERVAL '6 days';
+    JOIN theme ON session.id_theme = theme.id
+    WHERE utilisateur.mail = %s AND session.date BETWEEN DATE_TRUNC('week', CURRENT_DATE) AND DATE_TRUNC('week', CURRENT_DATE) + INTERVAL '6 days'
+    GROUP BY theme.libelle;
     '''
-    cursor.execute(infos_sessions_semaine_query, (mail_user,))
-    infos_sessions_semaine_result = cursor.fetchone()[0]
-    score_pourcentage_semaine = infos_sessions_semaine_result/5*100
+    cursor.execute(progression_query, (mail_user,))
+    progression_result = cursor.fetchall()
 
     cursor.close()
     mydb.close()
 
-    return score_pourcentage_semaine
+    return progression_result
 
 def progression_semaine(mail_user):
     mydb = acces_bdd()  

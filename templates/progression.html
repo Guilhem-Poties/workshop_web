@@ -6,48 +6,76 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PAGE PROGRESSION</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="../static/progression.css" />
 </head>
 
 <body>
     <header>
-        <a href="/index">Home</a>
+        <a href="/index"><img src="../static/images/logo_maison.png" alt="accueil"></a>
         <!-- route retour à l'index? -->
-        <a href="/progression">Progression</a>
+        <a href="/progression"><img src="../static/images/logo_graphe.png"></a>
         <!-- route vers progression -->
         <h1>QUIZOO</h1>
-        <a href="/compte">Compte</a>
+        <a href="/compte"><img src="../static/images/logo_profil.png" alt="profil"></a>
         <!-- route vers compte -->
     </header>
 
-    <div class="container">
+    <div class="container-progression">
         <!-- RÉCUPÉRER ET AFFICHER LES THÈMES DE LA BDD + lien vers la progression ou question? -->
         <h2>Graphe de progression de cette semaine : </h2>
+
+
+        <!-- On créer le graphe de progression -->
+        <canvas id="lineChart" width="900" height="400"></canvas>
+        <script>
+            var dates = JSON.parse('{{ dates_et_scores | map(attribute=0) | list | tojson | safe }}');
+            var scores = JSON.parse('{{ dates_et_scores | map(attribute=1) | list | tojson | safe }}');
+
+            var ctx = document.getElementById("lineChart").getContext("2d");
+            var lineChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: dates,
+                    datasets: [{
+                        label: 'Scores',
+                        data: scores,
+                        fill: false,
+                        borderColor: "rgb(75, 192, 192)",
+                        lineTension: 0.1
+                    }]
+                },
+                options: {
+                    responsive: false
+                }
+            });
+        </script>
+
+        <!-- <h2>Graphe de tes notes moyennes dans chaque thème : </h2>
+        <canvas id="lineChart2" width="900" height="400"></canvas>
+        <script>
+            var themes = JSON.parse('{{ themes_et_scores | map(attribute=0) | list | tojson | safe }}');
+            var scores = JSON.parse('{{ themes_et_scores | map(attribute=1) | list | tojson | safe }}');
+
+            var ctx = document.getElementById("lineChart2").getContext("2d");
+            var lineChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: themes,
+                    datasets: [{
+                        label: 'Scores (%)',
+                        data: scores,
+                        fill: false,
+                        borderColor: "rgb(75, 192, 192)",
+                        lineTension: 0.1
+                    }]
+                },
+                options: {
+                    responsive: false
+                }
+            });
+        </script> -->
+
     </div>
-
-    <!-- On créer le graphe de progression -->
-    <canvas id="lineChart" width="900" height="400"></canvas>
-    <script>
-        var dates = JSON.parse('{{ dates_et_scores | map(attribute=0) | list | tojson | safe }}');
-        var scores = JSON.parse('{{ dates_et_scores | map(attribute=1) | list | tojson | safe }}');
-
-        var ctx = document.getElementById("lineChart").getContext("2d");
-        var lineChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: dates,
-                datasets: [{
-                    label: 'Scores',
-                    data: scores,
-                    fill: false,
-                    borderColor: "rgb(75, 192, 192)",
-                    lineTension: 0.1
-                }]
-            },
-            options: {
-                responsive: false
-            }
-        });
-    </script>
 </body>
 
 

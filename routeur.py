@@ -146,7 +146,11 @@ def progression():
     if not session.get("name"):
         return redirect("/")
     liste_dates_et_scores = model.progression_semaine(session['name']) 
+    # liste_themes_et_scores = model.moyenne_score_theme(id_user,session['name']) 
     return render_template("progression.html", dates_et_scores = liste_dates_et_scores)
+
+
+    
 
 # @app.route("/question/<theme_id>", methods=['POST', 'GET'])
 # def question():
