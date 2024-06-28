@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PAGE PROGRESSION</title>
+    <link rel="stylesheet" href="../static/compte.css" />
 </head>
 
 <body>
@@ -18,7 +19,11 @@
         <!-- route vers compte -->
         <a href="/logout">Déconnexion</a>
     </header>
-    <p>{{liste_donnees_user}}</p>
+    <p>NOM : {{liste_donnees_user[1]}}</p>
+    <p>PRENOM : {{liste_donnees_user[2]}}</p>
+    <p>MAIL : {{liste_donnees_user[3]}}</p>
+    <p>DATE DE NAISANCE : {{liste_donnees_user[4]}}</p>
+    <p>MOT DE PASSE : {{liste_donnees_user[5]}}</p>
 
 
 

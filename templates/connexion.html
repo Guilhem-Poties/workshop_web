@@ -5,56 +5,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CONNEXION</title>
+    <link rel="stylesheet" href="../static/connexion.css" />
 </head>
 
 <body>
     <header>
         <h1>QUIZOO</h1>
     </header>
+    <div class="connexion-inscription">
+        <div class="form-connexion">
+            <h1 style="color:#EC7505;">CONNEXION</h1>
+            <form action="http://127.0.0.1:5000/connexion" method="POST">
 
-    <h1>CONNEXION</h1>
-    <form action="http://127.0.0.1:5000/connexion" method="POST">
+                <div class="elements-form">
+                    <label for="identifiant" class="titre-case-connexion">Identifiant ou email</label>
+                    <input type="text" name="email" id="email" placeholder="Identifiant ou email" class="case-connexion">
+                </div>
+                <div class="elements-form">
+                    <label for="MDP" class="titre-case-connexion">Mot de passe</label>
+                </div>
+                <input type="text" name="mdp" id="mdp" placeholder="Mot de passe" class="case-connexion">
+                <div class="elements-form">
+                    <input type="submit" style="color:#EC7505;" value="JOUER">
+                </div>
+            </form>
+        </div>
 
-        <label for="identifiant">Identifiant ou email</label>
-        <input type="text" name="email" id="email" placeholder="Identifiant ou email">
-        <br>
+        <div class="form-connexion">
+            <h1 style="color:#91972a;">INSCRIPTION</h1>
 
-        <label for="MDP">Mot de passe</label>
-        <input type="text" name="mdp" id="mdp" placeholder="Mot de passe">
-        <br>
-
-        <input type="submit" value="JOUER">
-    </form>
-    <!-- Vérifier avec la BDD -->
-
-    <!-- <button type="button" onclick="create()">Valider</button> -->
-    <h1>INSCRIPTION</h1>
-
-    <form action="http://127.0.0.1:5000/inscription" method="POST">
-        <label for="email">Email</label>
-        <input type="text" name="email" id="email" placeholder="Email">
-        <br>
-
-        <label for="identifiant">Nom</label>
-        <input type="text" name="nom" id="nom" placeholder="Nom">
-        <br>
-
-        <label for="identifiant">Prenom</label>
-        <input type="text" name="prenom" id="prenom" placeholder="Prenom">
-        <br>
-
-        <label for="Date">Date de naissance</label>
-        <input type="date" name="date_de_naissance" id="date_de_naissance" placeholder="JJ/MM/AAAA">
-        <br>
-
-        <label for="MDP">Mot de passe</label>
-        <input type="password" name="mdp" id="mdp" placeholder="Mot de passe">
-        <br>
-
-        <input type="submit" value="VALIDER">
-    </form>
-    <!-- Envoyer à la BDD -->
-
+            <form action="http://127.0.0.1:5000/inscription" method="POST" class="form-inscription">
+                <div class="elements-form">
+                    <label for="email">Email</label>
+                    <input type="text" name="email" id="email" placeholder="Email" class="case-inscription">
+                </div>
+                <div class="elements-form">
+                    <label for="identifiant">Nom</label>
+                    <input type="text" name="nom" id="nom" placeholder="Nom" class="case-inscription">
+                </div>
+                <div class="elements-form">
+                    <label for="identifiant">Prenom</label>
+                    <input type="text" name="prenom" id="prenom" placeholder="Prenom" class="case-inscription">
+                </div>
+                <div class="elements-form">
+                    <label for="Date">Date de naissance</label>
+                    <input type="date" name="date_de_naissance" id="date_de_naissance" placeholder="JJ/MM/AAAA" class="case-inscription">
+                </div>
+                <div class="elements-form">
+                    <label for="MDP">Mot de passe</label>
+                    <input type="password" name="mdp" id="mdp" placeholder="Mot de passe" class="case-inscription">
+                </div>
+                <div class="elements-form">
+                    <input type="submit" style="color:#91972a;" value="VALIDER">
+                </div>
+            </form>
+            <!-- Envoyer à la BDD -->
+        </div>
+    </div>
 
     <script>
         async function create() {

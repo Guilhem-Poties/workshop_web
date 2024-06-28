@@ -4,23 +4,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/index.css" />
     <title>PAGE SESSION</title>
 </head>
 
 <body>
     <header>
-        <a href="/index">Home</a>
+        <a href="/index"><img src="../images/logo_maison.png" alt="accueil"></a>
         <!-- route retour à l'index? -->
-        <a href="/progression">Progression</a>
+        <a href="/progression"><img src="../images/logo_graph.png" alt="progession"></a>
         <!-- route vers progression -->
         <h1>QUIZOO</h1>
-        <a href="/compte">Compte</a>
+        <a href="/compte"><img src="../images/logo_profil.png" alt="profil"></a>
         <!-- route vers compte -->
     </header>
 
     {% for theme in theme_list %}
     <a href="/question/{{theme.id}}">
-        <div class="container">
+        <div class="container-theme">
             <!-- RÉCUPÉRER ET AFFICHER LES THÈMES DE LA BDD + lien vers la progression ou question? -->
             <h2>{{theme.libelle}}</h2>
             <p>Progression</p>
