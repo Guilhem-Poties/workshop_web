@@ -113,6 +113,14 @@
                 display_question(question_actuelle);
             }
             else {
+                const response = await fetch("/api/v1/question", {  method: "PUT",
+                                                                    headers: {
+                                                                        "Content-Type": "application/json"
+                                                                    },
+                                                                    body: JSON.stringify({ score: score })});
+                
+                
+
                 display_score();
             }
         }
@@ -120,7 +128,7 @@
         function display_score() {
             document.getElementsByClassName("global-container")[0].innerHTML = `<h2>Félicitation !<h1>
                                                                                 <p>Ton score est de `+score+`/`+compteur_question+` !</p>
-                                                                                <button>Retour au menu</buton>`
+                                                                                <button href="/index">Retour au menu</buton>`
                                                                                 
         }
     </script>
