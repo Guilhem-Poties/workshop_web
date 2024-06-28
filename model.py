@@ -92,16 +92,13 @@ def recuperer_themes():
 
 def recuperer_questions(id_theme):
     mydb = acces_bdd()  
-     # Create cursor object to execute queries
     cursor = mydb.cursor()
-    
     
     infos_questions_reponses_query ='''
     SELECT question.id_question, question.libelle, question.id_bonne_reponse, reponse.id, reponse.libelle, reponse.image 
     FROM question JOIN reponse ON reponse.id_question = question.id_question JOIN theme ON theme.id = question.id_theme 
     WHERE theme.id=%s ORDER BY question.id_question, reponse.id;
     '''
-    
     cursor.execute(infos_questions_reponses_query, (id_theme,))
     infos_questions_reponses_result = cursor.fetchall()
 
@@ -133,9 +130,7 @@ def recuperer_questions(id_theme):
         })
     
     return jsonify(questions)
-    
     print (infos_questions_reponses_query)
-    
     return infos_questions_reponses_query
 
 def verif_email(email):
@@ -153,13 +148,13 @@ def verif_email(email):
     else:
         result = True  
 
-
     mydb.commit()   
     cursor.close()
     mydb.close()
 
     print (result)
     return result
+
 
 def verif_connexion(email, mot_de_passe):
     mydb = acces_bdd()  
@@ -168,7 +163,6 @@ def verif_connexion(email, mot_de_passe):
     check_user_query = '''
     SELECT mdp FROM utilisateur WHERE mail = %s;
     '''
-    
     cursor.execute(check_user_query, (email,))
     check_user_result = cursor.fetchone()
     
@@ -205,6 +199,7 @@ def moyenne_score_theme(id_theme, mail_user):
 
     return infos_progression_semaine_result
 
+
 def moyenne_score_semaine(mail_user):
     mydb = acces_bdd()  
      # Create cursor object to execute queries
@@ -226,13 +221,12 @@ def moyenne_score_semaine(mail_user):
 
     return progression_result
 
+
 def progression_semaine(mail_user):
     mydb = acces_bdd()  
      # Create cursor object to execute queries
     cursor = mydb.cursor()
     ##on cherche la date du debut de la semaine et de la fin de la semaine
-    # infos_progression_semaine_query ='''
-    
     infos_progression_semaine_query = '''
     SELECT session.date, session.score
     FROM session
@@ -246,12 +240,9 @@ def progression_semaine(mail_user):
     infos_progression_semaine_result = cursor.fetchall()
     
     # data=[("date": score_obtenu)]
-    # donnee_progression_semaine =[("01-01-2024", 5),("01-01-2024", 3),("01-01-2024", 1)]
     cursor.close()
     mydb.close()
 
-    # date=[row[0] for row in donnee_progression_semaine]
-    # score=[row[1] for row in donnee_progression_semaine]
     return infos_progression_semaine_result
 
 
@@ -279,27 +270,3 @@ def insert_session(id_theme, mail_user, score):
             mydb.close()
             print("MySQL connection is closed")
 
-
-# mydn = mysql.connect(
-#     host = 'localhost',
-#     user = 'root',
-#     password = '',
-#     database = 'quizoo'
-# )
-
-# ##### INFOS SUR UN SITE 
-# # mysql = MySQL(app)
- 
-# # #Creating a connection cursor
-# # cursor = mysql.connection.cursor()
- 
-# # #Executing SQL Statements
-# # cursor.execute(''' CREATE TABLE table_name(field1, field2...) ''')
-# # cursor.execute(''' INSERT INTO table_name VALUES(v1,v2...) ''')
-# # cursor.execute(''' DELETE FROM table_name WHERE condition ''')
- 
-# # #Saving the Actions performed on the DB
-# # mysql.connection.commit()
- 
-# # #Closing the cursor
-# # cursor.close()
