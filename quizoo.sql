@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost:8889
--- Généré le : ven. 28 juin 2024 à 07:58
+-- Généré le : ven. 28 juin 2024 à 08:57
 -- Version du serveur :  5.7.34
 -- Version de PHP : 7.4.21
 
@@ -97,27 +97,27 @@ INSERT INTO `reponse` (`id`, `libelle`, `image`, `id_question`) VALUES
 (21, '10 mots', '../images/question7_reponse0.png', 7),
 (22, '100 mots', '../images/question7_reponse1.png', 7),
 (23, '1 000 mots', '../images/question7_reponse2.png', 7),
-(24, 'Vert et jaune', NULL, 8),
-(25, 'Bleu et orange', NULL, 8),
-(26, 'Rouge et noir', NULL, 8),
-(27, 'Les pigeons', NULL, 9),
-(28, 'Les moineaux', NULL, 9),
-(29, 'Les colibris', NULL, 9),
-(30, 'Entre 40 et 80 kilos', NULL, 10),
-(31, 'Entre 80 et 120 kilos', NULL, 10),
-(32, 'Entre 120 et 160 kilos', NULL, 10),
-(33, 'Des plantes', NULL, 11),
-(34, 'De la viande', NULL, 11),
-(35, 'Du poisson', NULL, 11),
-(36, '9 mois', NULL, 12),
-(37, '21 mois', NULL, 12),
-(38, '15 mois', NULL, 12),
-(39, 'Le leopard ', NULL, 13),
-(40, 'Le guépard ', NULL, 13),
-(41, 'Le lion', NULL, 13),
-(42, 'Vrai', NULL, 14),
-(43, 'Faux', NULL, 14),
-(44, 'Je ne sais pas', NULL, 14);
+(24, 'Vert et jaune', '../images/question8_reponse0.png', 8),
+(25, 'Bleu et orange', '../images/question8_reponse1.png', 8),
+(26, 'Rouge et noir', '../images/question9_reponse2.png', 8),
+(27, 'Les pigeons', '../images/question10_reponse0.png', 9),
+(28, 'Les moineaux', '../images/question10_reponse1.png', 9),
+(29, 'Les colibris', '../images/question10_reponse2.png', 9),
+(30, 'Entre 40 et 80 kilos', '../images/question11_reponse0.png', 10),
+(31, 'Entre 80 et 120 kilos', '../images/question11_reponse1.png', 10),
+(32, 'Entre 120 et 160 kilos', '../images/question11_reponse2.png', 10),
+(33, 'Des plantes', '../images/question12_reponse0.png', 11),
+(34, 'De la viande', '../images/question12_reponse1.png', 11),
+(35, 'Du poisson', '../images/question12_reponse2.png', 11),
+(36, '9 mois', '../images/question13_reponse0.png', 12),
+(37, '21 mois', '../images/question13_reponse1.png', 12),
+(38, '15 mois', '../images/question13_reponse2.png', 12),
+(39, 'Le leopard ', '../images/question14_reponse0.png', 13),
+(40, 'Le guépard ', '../images/question14_reponse1.png', 13),
+(41, 'Le lion', '../images/question14_reponse2.png', 13),
+(42, 'Vrai', '../images/question15_reponse0.png', 14),
+(43, 'Faux', '../images/question15_reponse1.png', 14),
+(44, 'Je ne sais pas', '../images/question15_reponse2.png', 14);
 
 -- --------------------------------------------------------
 
@@ -132,6 +132,16 @@ CREATE TABLE `session` (
   `id_user` int(11) NOT NULL,
   `id_theme` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16;
+
+--
+-- Déchargement des données de la table `session`
+--
+
+INSERT INTO `session` (`id`, `date`, `score`, `id_user`, `id_theme`) VALUES
+(1, '2024-06-27', 4, 1, 0),
+(2, '2024-06-26', 3, 1, 1),
+(3, '2024-06-24', 3, 1, 1),
+(4, '2024-06-11', 5, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -170,6 +180,13 @@ CREATE TABLE `utilisateur` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16;
 
 --
+-- Déchargement des données de la table `utilisateur`
+--
+
+INSERT INTO `utilisateur` (`id`, `nom`, `prenom`, `mail`, `date_naissance`, `mdp`) VALUES
+(1, 'Multimédia', 'Kara', 'kara.multimedia@gmail.com', '2012-08-12', 'dying');
+
+--
 -- Index pour les tables déchargées
 --
 
@@ -193,8 +210,8 @@ ALTER TABLE `reponse`
 --
 ALTER TABLE `session`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `id_user` (`id_user`),
-  ADD UNIQUE KEY `id_theme` (`id_theme`);
+  ADD KEY `id_user` (`id_user`) USING BTREE,
+  ADD KEY `id_theme` (`id_theme`) USING BTREE;
 
 --
 -- Index pour la table `theme`
@@ -213,10 +230,16 @@ ALTER TABLE `utilisateur`
 --
 
 --
+-- AUTO_INCREMENT pour la table `session`
+--
+ALTER TABLE `session`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT pour la table `utilisateur`
 --
 ALTER TABLE `utilisateur`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Contraintes pour les tables déchargées

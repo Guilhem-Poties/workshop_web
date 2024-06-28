@@ -102,7 +102,7 @@ def inscription():
         print(f"Received data: {nom}, {prenom}, {email}, {date_naissance}, {mdp}")
         model.insert_user(nom, prenom, email, date_naissance, mdp)
         print("User inserted successfully!")
-        return "User inserted successfully!"
+        return redirect("/index")
 
     except Exception as e:
         print(f"Error: {e}")
@@ -119,7 +119,7 @@ def connexion():
 
         print("User connected successfully!")
         session["name"] = request.form.get("email")
-        return theme()
+        return redirect("/index")
 
     except Exception as e:
         print(f"Error: {e}")

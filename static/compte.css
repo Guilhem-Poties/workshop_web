@@ -7,10 +7,6 @@ body {
     background-color: #FFFBDB;
 }
 
-h1 {
-    color: #283618;
-}
-
 header {
     display: flex;
     order: 2;
@@ -20,17 +16,10 @@ header {
     /* rgba(0, 0, 0, 0.2); opacity: 4; */
     padding: 1vw;
     /* flex-direction: row; */
-    box-shadow: 0px 5px 10px #283618;
-}
-
-.container-theme {
-    padding: 2vw;
-    margin: 1vw;
-    background-color: #91972a;
+    box-shadow: 0px 5px 10px rgba(39, 39, 39, 0.767);
 }
 
 
 /* #EC7505 orange
-#0FA3B1 blockquote
-#283618 vert foncé
+#0FA3B1 blockquote283618 vert foncé
 #FFFBDB beige */
