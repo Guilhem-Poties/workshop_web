@@ -42,7 +42,7 @@
     <script>
         var compteur_question = 0;
         var score = 0;
-        
+
         window.addEventListener("load", (event) => {
             load_questions()
         });
@@ -54,7 +54,7 @@
             const list_questions = await response.json();
 
             localStorage.setItem("list_questions", JSON.stringify(list_questions));
-            
+
             question_suivante();
         }
 
@@ -74,8 +74,8 @@
             data = localStorage.getItem("list_questions");
             const list_questions = JSON.parse(data);
             keys = Object.keys(list_questions)
-            var question_actuelle = list_questions[keys[compteur_question-1]];
-            
+            var question_actuelle = list_questions[keys[compteur_question - 1]];
+
             var bouton = document.getElementById("bouton-suivant");
             var correction = document.getElementById("correction");
 
@@ -115,20 +115,23 @@
             bouton.style.visibility = "hidden";
             bouton.disabled = true;
             correction.style.visibility = "hidden";
-            
+
             // Vérifie si l'uilisateur est à la dernière question
             if (compteur_question < Object.keys(list_questions).length) {
                 compteur_question++;
                 display_question(question_actuelle);
-            }
-            else {
-                const response = await fetch("/api/v1/question", {  method: "PUT",
-                                                                    headers: {
-                                                                        "Content-Type": "application/json"
-                                                                    },
-                                                                    body: JSON.stringify({ score: score })});
-                
-                
+            } else {
+                const response = await fetch("/api/v1/question", {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        score: score
+                    })
+                });
+
+
 
                 display_score();
             }
@@ -136,9 +139,9 @@
 
         function display_score() {
             document.getElementsByClassName("global-container")[0].innerHTML = `<h2>Félicitation !</h2>
-                                                                                <p>Ton score est de `+score+`/`+compteur_question+` !</p>
+                                                                                <p>Ton score est de ` + score + `/` + compteur_question + ` !</p>
                                                                                 <a href="/index">Retour au menu</a>`
-                                                                                
+
         }
     </script>
 

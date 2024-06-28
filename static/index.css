@@ -20,6 +20,12 @@ h1 {
     margin: auto;
 }
 
+h2 {
+    color: #283618;
+    font-family: 'Glyker', sans-serif;
+    margin: 3vw;
+}
+
 p {
     font-family: 'Gill Sans', sans-serif;
 }
