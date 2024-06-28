@@ -97,7 +97,8 @@ def inscription():
         mdp = request.form['mdp']
 
         if model.verif_email(email):
-            return "Error: email already taken"
+            print("Error: email already taken")
+            return redirect("/")
 
         print(f"Received data: {nom}, {prenom}, {email}, {date_naissance}, {mdp}")
         model.insert_user(nom, prenom, email, date_naissance, mdp)
@@ -106,7 +107,7 @@ def inscription():
 
     except Exception as e:
         print(f"Error: {e}")
-        return "An error occurred"
+        return redirect("/")
 
 @app.route("/connexion", methods=['POST'])
 def connexion():
@@ -123,7 +124,7 @@ def connexion():
 
     except Exception as e:
         print(f"Error: {e}")
-        return "An error occurred"
+        return redirect("/")
    
 
 @app.route("/index", methods=['POST', 'GET'])
