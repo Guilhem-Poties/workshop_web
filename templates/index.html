@@ -19,16 +19,17 @@
         <!-- route vers compte -->
     </header>
 
-
-    {% for theme in theme_list %}
-    <a href="/question/{{theme.id}}">
-        <div class="container-theme">
-            <!-- RÉCUPÉRER ET AFFICHER LES THÈMES DE LA BDD + lien vers la progression ou question? -->
-            <h2>{{theme.libelle}}</h2>
-            <p>Progression</p>
-        </div>
-    </a>
-    {% endfor %}
+    <div class='choix-themes'>
+        {% for theme in theme_list %}
+        <a href="/question/{{theme.id}}">
+            <div class="container-theme">
+                <!-- RÉCUPÉRER ET AFFICHER LES THÈMES DE LA BDD + lien vers la progression ou question? -->
+                <h2>{{theme.libelle}}</h2>
+                <p>Progression</p>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
 
 
 </body>
