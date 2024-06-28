@@ -28,9 +28,14 @@ header {
 .connexion-inscription {
     display: flex;
     order: 2;
-    justify-content: space-between;
+    justify-content: space-around;
     align-content: center;
     padding: 1vw;
+    margin-top: 2vw;
+}
+
+.elements-form {
+    margin: 1vw;
 }
 
 .case-connexion {

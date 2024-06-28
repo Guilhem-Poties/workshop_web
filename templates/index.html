@@ -10,14 +10,15 @@
 
 <body>
     <header>
-        <a href="/index"><img src="../images/logo_maison.png" alt="accueil"></a>
-        <!-- route retour à l'index? -->
-        <a href="/progression"><img src="../images/logo_graph.png" alt="progession"></a>
-        <!-- route vers progression -->
-        <h1>QUIZOO</h1>
-        <a href="/compte"><img src="../images/logo_profil.png" alt="profil"></a>
-        <!-- route vers compte -->
+
     </header>
+    <a href="/index"><img src="/dauphins.jpg" alt="accueil"></a>
+    <!-- route retour à l'index? -->
+    <a href="/progression"><img src="../static/images/logo_graphe.png"></a>
+    <!-- route vers progression -->
+    <h1>QUIZOO</h1>
+    <a href="/compte"><img src="../static/images/logo_profil.png" alt="profil"></a>
+    <!-- route vers compte -->
 
     {% for theme in theme_list %}
     <a href="/question/{{theme.id}}">
