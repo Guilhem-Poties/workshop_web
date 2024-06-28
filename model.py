@@ -260,7 +260,22 @@ def progression_semaine(mail_user):
     return infos_progression_semaine_result
 
 
-def 
+def insert_session(id_theme, mail_user, score):
+    mydb = acces_bdd()  
+    cursor = mydb.cursor()
+    query = ''''''
+    query = '''
+    INSERT INTO utilisateur (nom, prenom, mail, date_naissance, mdp)
+    VALUES (%s, %s, %s, %s, %s)
+    '''
+    values = (nom, prenom, email, date_naissance, mdp)
+    cursor.execute(query, values)
+    mydb.commit()
+    if (mydb.is_connected()):
+            cursor.close()
+            mydb.close()
+            print("MySQL connection is closed")
+
 
 # mydn = mysql.connect(
 #     host = 'localhost',

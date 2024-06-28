@@ -63,7 +63,7 @@ def create_question():
 
             print("Session created succesfully")
 
-            model.insert_session(id_theme, )
+            model.insert_session(id_theme, session.get("name"), score)
 
         except Exception as e:
             print(f"Error: {e}")
