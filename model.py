@@ -109,6 +109,7 @@ def recuperer_questions(id_theme):
     mydb.close()
 
     questions = {}
+
     for row in infos_questions_reponses_result:
         question_id = row[0]
         question_text = row[1]
@@ -258,7 +259,8 @@ def progression_semaine(mail_user):
     # score=[row[1] for row in donnee_progression_semaine]
     return infos_progression_semaine_result
 
-    
+
+def 
 
 # mydn = mysql.connect(
 #     host = 'localhost',

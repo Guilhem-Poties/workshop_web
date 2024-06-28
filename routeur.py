@@ -38,15 +38,14 @@ def logout():
 	session["name"] = None
 	return redirect("/")
 
-@app.route("/question/<id>", methods=['GET', 'POST'])
+@app.route("/question/<id>")
 def question(id):
     global id_theme
     id_theme = id
-    print(id)
     return render_template('question.html')
         
 
-@app.route("/api/v1/question", methods=['GET', 'POST'])
+@app.route("/api/v1/question", methods=['GET', 'PUT'])
 def create_question():
     if not session.get("name"):
         # if not there in the session then redirect to the login page
@@ -56,7 +55,7 @@ def create_question():
         quest = model.recuperer_questions(id_theme)
         return quest
     
-    if request.method == 'POST':
+    if request.method == 'PUT':
         try:
             data = request.get_json()
 
@@ -64,7 +63,7 @@ def create_question():
 
             print("Session created succesfully")
 
-            model.insert_session()
+            model.insert_session(id_theme, )
 
         except Exception as e:
             print(f"Error: {e}")
@@ -76,7 +75,7 @@ def create_question():
         
         score = data['value']
 
-        
+
 
 
 # @app.route("/connexion", methods=['POST', 'GET'])
