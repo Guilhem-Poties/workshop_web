@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost:8889
--- Généré le : ven. 28 juin 2024 à 08:48
+-- Généré le : ven. 28 juin 2024 à 08:57
 -- Version du serveur :  5.7.34
 -- Version de PHP : 7.4.21
 
@@ -133,6 +133,16 @@ CREATE TABLE `session` (
   `id_theme` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16;
 
+--
+-- Déchargement des données de la table `session`
+--
+
+INSERT INTO `session` (`id`, `date`, `score`, `id_user`, `id_theme`) VALUES
+(1, '2024-06-27', 4, 1, 0),
+(2, '2024-06-26', 3, 1, 1),
+(3, '2024-06-24', 3, 1, 1),
+(4, '2024-06-11', 5, 1, 2);
+
 -- --------------------------------------------------------
 
 --
@@ -170,6 +180,13 @@ CREATE TABLE `utilisateur` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16;
 
 --
+-- Déchargement des données de la table `utilisateur`
+--
+
+INSERT INTO `utilisateur` (`id`, `nom`, `prenom`, `mail`, `date_naissance`, `mdp`) VALUES
+(1, 'Multimédia', 'Kara', 'kara.multimedia@gmail.com', '2012-08-12', 'dying');
+
+--
 -- Index pour les tables déchargées
 --
 
@@ -193,8 +210,8 @@ ALTER TABLE `reponse`
 --
 ALTER TABLE `session`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `id_user` (`id_user`),
-  ADD UNIQUE KEY `id_theme` (`id_theme`);
+  ADD KEY `id_user` (`id_user`) USING BTREE,
+  ADD KEY `id_theme` (`id_theme`) USING BTREE;
 
 --
 -- Index pour la table `theme`
@@ -213,10 +230,16 @@ ALTER TABLE `utilisateur`
 --
 
 --
+-- AUTO_INCREMENT pour la table `session`
+--
+ALTER TABLE `session`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT pour la table `utilisateur`
 --
 ALTER TABLE `utilisateur`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Contraintes pour les tables déchargées
