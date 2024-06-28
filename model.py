@@ -233,14 +233,6 @@ def progression_semaine(mail_user):
     ##on cherche la date du debut de la semaine et de la fin de la semaine
     # infos_progression_semaine_query ='''
     
-    # SELECT session.date, session.score
-    # FROM session
-    # JOIN utilisateur ON utilisateur.id = session.id_user
-    # WHERE utilisateur.mail = %s
-    # AND session.date BETWEEN
-    #     DATE_SUB(CURDATE(), INTERVAL WEEKDAY(CURDATE()) DAY)
-    #     AND DATE_ADD(DATE_SUB(CURDATE(), INTERVAL WEEKDAY(CURDATE()) DAY), INTERVAL 6 DAY);
-    # '''
     infos_progression_semaine_query = '''
     SELECT session.date, session.score
     FROM session
